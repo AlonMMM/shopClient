@@ -9,21 +9,28 @@ angular.module('homeApp', ['ngRoute'])
   });
 }])
 
-
 .controller('homeCtrl', ['$http', function($http) {
     var reqUrl = "http://localhost:3100/musicalsInstruments/getTop5Products";
 
     var self = this;
     self.products = [];
-    $http.get(reqUrl)
-        .then(function (response) {
-            console.log("**http Get!");
-                var productArr = response.data;
-                self.products = productArr;
-                console.log(productArr);
 
-            },function (reason) {
-                console.log(reason.message)
-            }
-        )
+    self.getTop5Product =function()
+    {
+        $http.get(reqUrl)
+            .then(function (response) {
+                    console.log("**http Get!");
+                    var productArr = response.data;
+                    self.products = productArr;
+                    console.log(productArr);
+
+                }, function (reason) {
+                    console.log(reason.message)
+                }
+            )
+    }
+
+    self.getTop5Product();
+
+
 }]);

@@ -1,10 +1,11 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+var myApp=angular.module('myApp', [
   'ngRoute',
   'homeApp',
   'productsApp',
+  'registrationApp',
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
@@ -12,3 +13,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
   $routeProvider.otherwise({redirectTo: '/products'});
 }]);
+
+function HeaderCtrl($scope) {
+    $scope.header = {name: "header.html", url: "header.html"};
+}
