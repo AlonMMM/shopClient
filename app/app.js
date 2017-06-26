@@ -6,14 +6,12 @@ var myApp=angular.module('myApp', [
   'homeApp',
   'productsApp',
   'registrationApp',
+  'myLoginApp',
   'myApp.version'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+]);
+myApp.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
 
   $routeProvider.otherwise({redirectTo: '/products'});
 }]);
 
-function HeaderCtrl($scope) {
-    $scope.header = {name: "header.html", url: "header.html"};
-}

@@ -1,2 +1,121 @@
 
-<p>Registration</p>
+<div id="all">
+    <div ng-controller="registerController as registerCtrl">
+        <div id="content">
+            <div class="container">
+                <!-- /#start register -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <h1>New account</h1>
+                        <p class="lead">Not our registered customer yet?</p>
+                        <p>With registration with us new world of musical instruments, fantastic discounts and much more
+                            opens to you! The whole process will not take you more than a minute!</p>
+                        <p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact
+                            us</a>, our customer service center is working for you 24/7.</p>
+                        <hr>
+                        <form ng-model="registrationForm" name="registrationForm"
+                              method="post">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" type="email" name="mail" ng-model="registerCtrl.mail" required>
+                                <span style="color:red" ng-show="registrationForm.mail.$dirty && registrationForm.mail.$invalid">
+                                <span ng-show="registrationForm.mail.$error.required">Email is required.</span>
+                                    <span ng-show="registrationForm.mail.$error.email">Invalid email address.</span>
+
+                                  </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="text" class="form-control" name="pass" ng-model="registerCtrl.password">
+                            </div>
+                            <div class="form-group">
+                                <label for="fName">First name</label>
+                                <input type="text" class="form-control" id="fName" ng-model="registerCtrl.fName">
+                            </div>
+                            <div class="form-group">
+                                <label for="lName">Last name</label>
+                                <input type="text" class="form-control" id="lName" ng-model="registerCtrl.lName" >
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone number</label>
+                                <input type="text" class="form-control" id="phone" ng-model="registerCtrl.phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="cellular">cellular number</label>
+                                <input type="text" class="form-control" id="cellular" ng-model="registerCtrl.cellular">
+                            </div>
+                            <div class="form-group">
+                                <label for="addr">Full address</label>
+                                <input type="text" class="form-control" id="addr" ng-model="registerCtrl.addr">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" ng-model="registerCtrl.city">
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" class="form-control" id="country" ng-model="registerCtrl.country">
+                            </div>
+                            <div class="form-group">
+                                <label for="creditCardNum">Creditcard number</label>
+                                <input type="text" class="form-control" id="creditCardNum" ng-model="registerCtrl.creditCardNum">
+                            </div>
+                            //is Admin!!!!
+                            <div class="form-group">
+                                <label for="interest_types">Choose your interests</label>
+                                <input type="text" class="form-control" id="interest_types" ng-model="registerCtrl.interest_types">
+                            </div>
+                            <div class="form-group">
+                                <label for="school">School (for safety reasons only)</label>
+                                <input type="text" class="form-control" id="school" ng-model="registerCtrl.school">
+                            </div>
+                            <div class="form-group">
+                                <label for="firstPet">First pet name (for safety reasons only)</label>
+                                <input type="text" class="form-control" id="firstPet" ng-model="registerCtrl.firstPet">
+                            </div>
+                            <input type="text" class="form-control" ng-model="registerCtrl.error">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary" ng-click="registerCtrl.register()"> Register
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- /#end register -->
+
+
+                <div class="col-md-6">
+                    <div class="box">
+                        <h1>Login</h1>
+
+                        <p class="lead">Already our customer?</p>
+                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                            ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet,
+                            ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies
+                            mi vitae est. Mauris placerat eleifend leo.</p>
+                        <hr>
+                        <form action="customer-orders.html" method="post">
+                            <div class="form-group">
+                                <label for="emaill">Email</label>
+                                <input type="text" class="form-control" id="emaill">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container -->
+        </div>
+    </div>
+    <!-- /#content -->
+</div>`
+<!-- /#all -->
+

@@ -26,4 +26,4 @@ angular.module('productsApp', ['ngRoute'])
                     console.log(reason.message)
                 }
             )
-    }]);
+        }]);

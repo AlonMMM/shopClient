@@ -29,8 +29,5 @@ angular.module('homeApp', ['ngRoute'])
                 }
             )
     }
-
     self.getTop5Product();
-
-
 }]);
