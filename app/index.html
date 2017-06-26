@@ -1,109 +1,86 @@
 <!DOCTYPE html>
 
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-  <link rel="stylesheet" href="app.css">
-  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My AngularJS App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 
-  <!-- styles -->
-  <link href="css/font-awesome.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/animate.min.css" rel="stylesheet">
-  <link href="css/owl.carousel.css" rel="stylesheet">
-  <link href="css/owl.theme.css" rel="stylesheet">
+    <!-- styles -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/layout.css" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/productStyle.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- theme stylesheet -->
-  <link href="css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+    <!-- theme stylesheet -->
 
-  <!-- your stylesheet with modifications -->
-  <link href="css/custom.css" rel="stylesheet">
-
-
-
-
+    <!-- your stylesheet with modifications -->
 
 </head>
 <body>
-  <ul class="menu">
+<!-- START PAGE SOURCE -->
+<div class="tail-top">
+    <header>
+        <div class="container">
+            <span class="top-info">24/7 Sales &amp; Support + 1 800 234 5678 &nbsp; l &nbsp; <a href="#">Hot Deals</a> &nbsp; l &nbsp; <a
+                    href="#">Search</a></span>
+            <li ><a href="#!/loginModal" id="login">login</a>
+            <li ><a href="#!/registration" id="login">register</a>
 
-    <!-- *** TOPBAR *** -->
-    <div id="top">
-      <div class="container">
-        <div class="col-md-6 offer" data-animate="fadeInDown">
-          <a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offer of the day</a>  <a href="#">Get flat 35% off on orders over $50!</a>
-        </div>
-        <div class="col-md-6" data-animate="fadeInDown">
-          <ul class="menu">
-            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
             </li>
-            <li><a href="#!/registration">Register</a>
-            </li>
-          </ul>
         </div>
-      </div>
-      <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
 
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="Login">Customer login</h4>
-            </div>
-            <div class="modal-body">
-              <form action="customer-orders.html" method="post">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="email-modal" placeholder="email">
-                </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" id="password-modal" placeholder="password">
-                </div>
-
-                <p class="text-center">
-                  <button class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
-                </p>
-
-              </form>
-
-              <p class="text-center text-muted">Not registered yet?</p>
-              <p class="text-center text-muted"><a href="registration.html"><strong>Register now</strong></a>! It is easy and done in 1&nbsp;minute and gives you access to special discounts and much more!</p>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    </header>
 
     <!-- *** TOP BAR END *** -->
-  </ul>
 
-  <div ng-view></div>
+    <!-- *** NAVBAR ***
+ _________________________________________________________ -->
 
-  <div><p>{{1+6}}</p></div>
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="app.js"></script>
-  <script src="Home/homeController.js"></script>
-  <script src="Products/productsController.js"></script>
-  <script src="Registration/registrationCtrl.js"></script>
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Music Shop</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#!/home">Home</a></li>
+                <li><a href="#!/products">Products</a></li>
+                <li><a href="#!/about">About</a></li>
+                <li><a href="#!/contact">Contact</a></li>
 
-  <script src="components/bootstrap.min.js"></script>
-  <script src="components/front.js"></script>
-  <script src="components/owl.carousel.min.js"></script>
-  <script src="components/bootstrap-hover-dropdown.js"></script>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div ng-view></div>
+
+<div><p>{{1+6}}</p></div>
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="app.js"></script>
+<script src="Home/homeController.js"></script>
+<script src="Products/productsController.js"></script>
+<script src="Registration/registrationCtrl.js"></script>
+<script src="Login/loginController.js"></script>
+<script src="components/version/version.js"></script>
+<script src="components/version/version-directive.js"></script>
+<script src="components/version/interpolate-filter.js"></script>
+
+<script src="components/bootstrap.min.js"></script>
+<script src="components/front.js"></script>
+<script src="components/owl.carousel.min.js"></script>
+<script src="components/bootstrap-hover-dropdown.js"></script>
 
 </body>
 </html>
