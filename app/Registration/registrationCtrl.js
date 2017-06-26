@@ -31,15 +31,14 @@ angular.module('registrationApp', ['ngRoute'])
         c.isAdmin=0;
         c.interest_types="";
         c.school= "";
-        c.firsPet="";
+        c.firstPet="";
         c.response= "";
 
         c.register =function()
         {
-            console.log("register, the mail: "+c.interest_types);
             var inData= {
                 "mail":c.mail,
-                "password":c.password,
+                "pass":c.password,
                 "fName":c.fName,
                 "lName":c.lName,
                 "phone":c.phone,
@@ -49,12 +48,11 @@ angular.module('registrationApp', ['ngRoute'])
                 "country":c.country,
                 "creditCardNum":c.creditCardNum,
                 "isAdmin":c.isAdmin,
-                "interest_types":c.interest_types,
-                "School":c.school,
-                "firstPet":c.firsPet};
+                "interest_types":c.interest_types.toString(),
+                "school":c.school,
+                "firstPet":c.firstPet};
             $http.post(registerUrl, inData)
                 .then(function (response) {
-                    console.log("**http Post!");
                     var res = response.data;
                         c.response= res;
                     }, function (reason) {
@@ -62,15 +60,15 @@ angular.module('registrationApp', ['ngRoute'])
                     }
                 )
         }
+
+
         c.logIn =function()
         {
-            console.log("login the mail: "+c.lmail + " " + c.lpassword);
             var inData= {
                 "mail":c.lmail,
                 "pass":c.lpassword};
             $http.post(loginUrl, inData)
                 .then(function (response) {
-                    console.log("**http Post!");
                         var res = response.data;
                         c.response=res[0].Mail;
                         if (c.lmail===res[0].Mail)
