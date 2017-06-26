@@ -11,12 +11,16 @@ angular.module('registrationApp', ['ngRoute'])
 
     .controller('registerController', ['$http', function($http) {
         var registerUrl = "http://localhost:3100/users/registerUser";
+        var loginUrl = "http://localhost:3100/Login";
         var c= this;
+        c.logedIn="";
         c.countries= [];
         var countries = [{name: 'Mexico'},{name:'Israel'}];
         c.countries= countries;
-        c.mail="hi";
-        c.pass = "";
+        c.mail="";
+        c.password = "";
+        c.lmail="";
+        c.lpassword = "";
         c.fName= "";
         c.lName= "";
         c.phone="";
@@ -30,14 +34,13 @@ angular.module('registrationApp', ['ngRoute'])
         c.school= "";
         c.firsPet="";
         c.error= "";
-        console.log("the mail: "+c.mail);
 
         c.register =function()
         {
-            console.log("1");
-            console.log("the mail: "+c.mail);
-            var inData= {   "mail":c.mail,
-                "password":c.pass,
+            console.log("register, the mail: "+c.mail);
+            var inData= {
+                "mail":c.mail,
+                "password":c.password,
                 "fName":c.fName,
                 "lName":c.lName,
                 "phone":c.phone,
@@ -49,18 +52,31 @@ angular.module('registrationApp', ['ngRoute'])
                 "isAdmin":c.isAdmin,
                 "interest_types":c.interest_types,
                 "School":c.school,
-                "firstPet":c.firsPet}
-            console.log("2");
+                "firstPet":c.firsPet};
             $http.post(registerUrl, inData)
-
                 .then(function (response) {
-                        console.log("**http Post!");
                         var res = response.data;
                         console.log(res);
                     }, function (reason) {
                         c.error = reason;
                         console.log(reason.message)
-
+                    }
+                )
+        }
+        c.logIn =function()
+        {
+            console.log("login the mail: "+c.lmail + " " + c.lpassword);
+            var inData= {
+                "mail":c.lmail,
+                "pass":c.lpassword};
+            $http.post(loginUrl, inData)
+                .then(function (response) {
+                        var res = response.data;
+                        if (c.lmail===res[0].Mail)
+                            c.logedIn=c.lmail;
+                    }, function (reason) {
+                        c.error = reason;
+                        console.log("error is " + reason.message)
                     }
                 )
         }
