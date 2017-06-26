@@ -4,8 +4,7 @@ angular.module('registrationApp', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/registration', {
-            templateUrl: 'Registration/registration.html',
-            controller: 'registerController'
+            templateUrl: 'Registration/registration.html'
         });
     }])
 
@@ -33,11 +32,11 @@ angular.module('registrationApp', ['ngRoute'])
         c.interest_types="";
         c.school= "";
         c.firsPet="";
-        c.error= "";
+        c.response= "";
 
         c.register =function()
         {
-            console.log("register, the mail: "+c.mail);
+            console.log("register, the mail: "+c.interest_types);
             var inData= {
                 "mail":c.mail,
                 "password":c.password,
@@ -55,11 +54,11 @@ angular.module('registrationApp', ['ngRoute'])
                 "firstPet":c.firsPet};
             $http.post(registerUrl, inData)
                 .then(function (response) {
-                        var res = response.data;
-                        console.log(res);
+                    console.log("**http Post!");
+                    var res = response.data;
+                        c.response= res;
                     }, function (reason) {
-                        c.error = reason;
-                        console.log(reason.message)
+                        c.response = "error is " + reason.message;
                     }
                 )
         }
@@ -71,12 +70,13 @@ angular.module('registrationApp', ['ngRoute'])
                 "pass":c.lpassword};
             $http.post(loginUrl, inData)
                 .then(function (response) {
+                    console.log("**http Post!");
                         var res = response.data;
+                        c.response=res[0].Mail;
                         if (c.lmail===res[0].Mail)
                             c.logedIn=c.lmail;
                     }, function (reason) {
-                        c.error = reason;
-                        console.log("error is " + reason.message)
+                        c.response = "error is " + reason.message;
                     }
                 )
         }

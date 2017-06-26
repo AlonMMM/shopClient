@@ -11,10 +11,8 @@ angular.module('homeApp', ['ngRoute'])
 
 .controller('homeCtrl', ['$http', function($http) {
     var reqUrl = "http://localhost:3100/musicalsInstruments/getTop5Products";
-
     var self = this;
     self.products = [];
-
     self.getTop5Product =function()
     {
         $http.get(reqUrl)
@@ -29,5 +27,5 @@ angular.module('homeApp', ['ngRoute'])
                 }
             )
     }
-    self.getTop5Product();
+
 }]);
