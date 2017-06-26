@@ -8,31 +8,61 @@
                     <div class="box">
                         <h1>Login</h1>
                         <p class="lead">Already our customer?</p>
-                        <p class="text-muted">Please sign in so you will be able to enjoy a whole world of high quality musical instruments!</p>
+                        <p>Please sign in so you will be able to enjoy a whole world of high quality musical instruments!</p>
                         <hr>
                         <form method="post" ng-model="loginForm" name="loginForm">
                             <div class="form-group">
                                 <label>Mail</label>
-                                <input type="email"  class="form-control" name="mail" ng-model="registerCtrl.lmail" required>
+                                <input type="text"  class="form-control" name="mail" ng-model="registerCtrl.user.mail" required>
                                 <span style="color:red" ng-show="loginForm.mail.$dirty && loginForm.mail.$invalid">
                                 <span ng-show="loginForm.mail.$error.required">Email is required.</span>
-                                    <span ng-show="loginForm.mail.$error.email">Invalid email address.</span>
                                   </span>
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="text" class="form-control" name="pass" ng-model="registerCtrl.lpassword" required>
+                                <input type="text" class="form-control" name="pass" ng-model="registerCtrl.user.pass" required>
                                 <span style="color:red" ng-show="loginForm.pass.$touched">
                                 <span ng-show="loginForm.pass.$error.required">Password is required.</span>
                                   </span>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid" ng-click="registerCtrl.logIn()">Log in
+                                <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid" ng-click="registerCtrl.logIn(loginForm.$valid)">Log in
                                 </button>
 
                             </div>
+                            // -----------------forgot your password-------------------------
                         </form>
+                        <div class="col-md-6">
+                            <div class="box">
+                                <h1>Login</h1>
+                                <p class="lead">Forgot your password?</p>
+                                <p>Please sign in so you will be able to enjoy a whole world of high quality musical instruments!</p>
+                                <hr>
+                                <form method="post" ng-model="loginForm" name="loginForm">
+                                    <div class="form-group">
+                                        <label>Mail</label>
+                                        <input type="text"  class="form-control" name="mail" ng-model="registerCtrl.user.mail" required>
+                                        <span style="color:red" ng-show="loginForm.mail.$dirty && loginForm.mail.$invalid">
+                                <span ng-show="loginForm.mail.$error.required">Email is required.</span>
+                                  </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="text" class="form-control" name="pass" ng-model="registerCtrl.user.pass" required>
+                                        <span style="color:red" ng-show="loginForm.pass.$touched">
+                                <span ng-show="loginForm.pass.$error.required">Password is required.</span>
+                                  </span>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid" ng-click="registerCtrl.logIn(loginForm.$valid)">Log in
+                                        </button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                    // -----------------forgot your password-------------------------
                 </div>
                 <!-- /#start register -->
                 <div class="col-md-6">
@@ -58,7 +88,7 @@
                                 <input type="text" class="form-control" name="password" ng-model="registerCtrl.password" ng-pattern="^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$" ng-minlength=5 ng-maxlength=10 required>
                                 <span style="color:red" ng-show="registrationForm.password.$touched">
                                 <span ng-show="registrationForm.password.$error.required">Password is required.</span>
-                                    <span ng-show="registrationForm.password.$invalid">Password must contain at least one number and one letter and be 5-10  characters long.</span>
+                                    <span ng-show="registrationForm.password.$invalid">Password must contain at least one number and one letter and be 5-10 characters long.</span>
                                   </span>
                             </div>
                             <div class="form-group">
@@ -121,7 +151,7 @@
                                   </span>
                             </div>
                             <div class="form-group">
-                                <label>Choose your interests</label>
+                                <label>Choose your interests, press Ctrl button for multiple choice</label>
                                 <select type="text" class="form-control" name="interest_types" ng-model="registerCtrl.interest_types" required multiple>
                                     <option value="Pianos">Piano</option>
                                     <option value="Guitars">Guitars</option>
@@ -136,7 +166,7 @@
                                   </span>
                             </div>
                             <div class="form-group">
-                                <label>School (for safety security only)</label>
+                                <label>School (for security reasons only)</label>
                                 <input type="text" class="form-control" name="school" ng-model="registerCtrl.school" required>
                                 <span style="color:red" ng-show="registrationForm.school.$touched">
                                 <span ng-show="registrationForm.school.$error.required">School is required.</span>
@@ -156,7 +186,6 @@
                         </form>
                     </div>
                 </div>
-
                 <!-- /#end register -->
 
             </div>

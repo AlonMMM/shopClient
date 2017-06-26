@@ -8,9 +8,9 @@ angular.module('registrationApp', ['ngRoute'])
         });
     }])
 
-    .controller('registerController', ['$http', function($http) {
+    .controller('registerController', ['userService', '$http','$location', '$window', function(userService, $http,$location, $window) {
         var registerUrl = "http://localhost:3100/users/registerUser";
-        var loginUrl = "http://localhost:3100/Login";
+   //     var loginUrl = "http://localhost:3100/Login";
         var c= this;
         c.logedIn="";
         c.countries= [];
@@ -18,8 +18,6 @@ angular.module('registrationApp', ['ngRoute'])
         c.countries= countries;
         c.mail="";
         c.password = "";
-        c.lmail="";
-        c.lpassword = "";
         c.fName= "";
         c.lName= "";
         c.phone="";
@@ -61,38 +59,36 @@ angular.module('registrationApp', ['ngRoute'])
                 )
         }
 
-
-        c.logIn =function()
+        c.user= {
+            mail:'',
+            pass:''};
+        c.logIn =function(valid)
         {
-            var inData= {
-                "mail":c.lmail,
-                "pass":c.lpassword};
-            $http.post(loginUrl, inData)
-                .then(function (response) {
-                        var res = response.data;
-                        c.response=res[0].Mail;
-                        if (c.lmail===res[0].Mail)
-                            c.logedIn=c.lmail;
-                    }, function (reason) {
-                        c.response = "error is " + reason.message;
-                    }
-                )
+          if(valid){
+              userService.login(c.user)
+                  .then(function (succes){
+                      $window.alert('You are logged in!');
+                      $location.path('/home');
+                      c.response= succes.data;
+                  },function(error){
+                      c.response= error.message;
+                      $window.alert('Login failed!');
+                      }
+                  )
+          }
+            // var inData= {
+            //     "mail":c.lmail,
+            //     "pass":c.lpassword};
+            //
+            // $http.post(loginUrl, inData)
+            //     .then(function (response) {
+            //             var res = response.data;
+            //             c.response=res[0].Mail;
+            //             if (c.lmail===res[0].Mail)
+            //                 c.logedIn=c.lmail;
+            //         }, function (reason) {
+            //             c.response = "error is " + reason.message;
+            //         }
+            //     )
         }
-
-        /**   registrationApp.directive('myDirective', function() {
-            return {
-                require: 'ngModel',
-                link: function(scope, element, attr, mCtrl) {
-                    function myValidation(value) {
-                        if (value.indexOf("e") > -1) {
-                            c.$setValidity('charE', true);
-                        } else {
-                            c.$setValidity('charE', false);
-                        }
-                        return value;
-                    }
-                    mCtrl.$parsers.push(myValidation);
-                }
-            };
-     });**/
     }]);
