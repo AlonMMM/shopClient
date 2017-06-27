@@ -1,6 +1,7 @@
-<div ng-controller="homeCtrl as homeC">
-    <p>Welcome</p>
 
+<div ng-controller="homeCtrl as homeC">
+    <h1 class="home">Welcome</h1>
+    <h2 class="home">Our top hotest products: </h2>
     <div  ng-repeat="product in homeC.products" class="col-sm-6 col-md-4">
         <div class="thumbnail">
                 <h4 class="text-center"><span class="label label-info">{{product.Manufactur}}</span></h4>
@@ -18,7 +19,7 @@
                 <p>{{product.Description}}</p>
                 <div class="row">
                     <div class="col-md-6">
-                        <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> View Details</a>
+                        <a class="btn btn-primary btn-product" ng-click="homeC.detail(product.Musical_instrument)"><span class="glyphicon glyphicon-thumbs-up" ></span>View Details</a>
                     </div>
                     <div class="col-md-6">
                         <a href="#" class="btn btn-success btn-product"><span
