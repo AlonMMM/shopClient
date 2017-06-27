@@ -8,14 +8,16 @@ angular.module('registrationApp', ['ngRoute'])
         });
     }])
 
-    .controller('registerController', ['$http', function($http) {
+    .controller('registerController', ['userService', '$http','$location', '$window', function(userService, $http,$location, $window) {
         var registerUrl = "http://localhost:3100/users/registerUser";
+   //     var loginUrl = "http://localhost:3100/Login";
         var c= this;
+        c.logedIn="";
         c.countries= [];
         var countries = [{name: 'Mexico'},{name:'Israel'}];
         c.countries= countries;
-        c.mail="hi";
-        c.pass = "";
+        c.mail="";
+        c.password = "";
         c.fName= "";
         c.lName= "";
         c.phone="";
@@ -27,16 +29,14 @@ angular.module('registrationApp', ['ngRoute'])
         c.isAdmin=0;
         c.interest_types="";
         c.school= "";
-        c.firsPet="";
-        c.error= "";
-        console.log("the mail: "+c.mail);
+        c.firstPet="";
+        c.response= "";
 
         c.register =function()
         {
-            console.log("1");
-            console.log("the mail: "+c.mail);
-            var inData= {   "mail":c.mail,
-                "password":c.pass,
+            var inData= {
+                "mail":c.mail,
+                "pass":c.password,
                 "fName":c.fName,
                 "lName":c.lName,
                 "phone":c.phone,
@@ -46,38 +46,49 @@ angular.module('registrationApp', ['ngRoute'])
                 "country":c.country,
                 "creditCardNum":c.creditCardNum,
                 "isAdmin":c.isAdmin,
-                "interest_types":c.interest_types,
-                "School":c.school,
-                "firstPet":c.firsPet}
-            console.log("2");
+                "interest_types":c.interest_types.toString(),
+                "school":c.school,
+                "firstPet":c.firstPet};
             $http.post(registerUrl, inData)
-
                 .then(function (response) {
-                        console.log("**http Post!");
-                        var res = response.data;
-                        console.log(res);
+                    var res = response.data;
+                        c.response= res;
                     }, function (reason) {
-                        c.error = reason;
-                        console.log(reason.message)
-
+                        c.response = "error is " + reason.message;
                     }
                 )
         }
 
-        /**   registrationApp.directive('myDirective', function() {
-            return {
-                require: 'ngModel',
-                link: function(scope, element, attr, mCtrl) {
-                    function myValidation(value) {
-                        if (value.indexOf("e") > -1) {
-                            c.$setValidity('charE', true);
-                        } else {
-                            c.$setValidity('charE', false);
-                        }
-                        return value;
-                    }
-                    mCtrl.$parsers.push(myValidation);
-                }
-            };
-     });**/
+        c.user= {
+            mail:'',
+            pass:''};
+        c.logIn =function(valid)
+        {
+          if(valid){
+              userService.login(c.user)
+                  .then(function (succes){
+                      $window.alert('You are logged in!');
+                      $location.path('/home');
+                      c.response= succes.data;
+                  },function(error){
+                      c.response= error.message;
+                      $window.alert('Login failed!');
+                      }
+                  )
+          }
+            // var inData= {
+            //     "mail":c.lmail,
+            //     "pass":c.lpassword};
+            //
+            // $http.post(loginUrl, inData)
+            //     .then(function (response) {
+            //             var res = response.data;
+            //             c.response=res[0].Mail;
+            //             if (c.lmail===res[0].Mail)
+            //                 c.logedIn=c.lmail;
+            //         }, function (reason) {
+            //             c.response = "error is " + reason.message;
+            //         }
+            //     )
+        }
     }]);

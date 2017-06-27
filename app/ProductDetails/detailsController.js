@@ -11,9 +11,9 @@ angular.module('detailsApp', ['ngRoute'])
         });
     }])
 
-    .controller('detailsController', ['productService','$http', function(productService,$http) {
+    .controller('detailsController', ['$uibModalInstance','productService','$http', function($uibModalInstance, product,productService,$http) {
         var self = this;
-        self.productId = productService.get();
+        self.productId = product;
         var reqUrl = "http://localhost:3100/musicalsInstruments/getProductDetails";
 
         self.getDetails = function () {

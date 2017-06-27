@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('homeApp', ['ngRoute'])
+angular.module('homeApp', ['ngRoute','ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/home', {
@@ -8,10 +8,9 @@ angular.module('homeApp', ['ngRoute'])
   });
 }])
 
-.controller('homeCtrl', ['productService','$http','$location', function(productService,$http,$location) {
+.controller('homeCtrl', ['productService','$http','$location','$uibModal', function(productService,$http,$location,$uibModal) {
 
     var reqUrl = "http://localhost:3100/musicalsInstruments/getTop5Products";
-
 
     var self = this;
     self.products = [];
@@ -31,8 +30,17 @@ angular.module('homeApp', ['ngRoute'])
     self.getTop5Product();
 
     self.detail = function (product) {
-        productService.set(product);
-        $location.path("/productDetails");
+        $uibModal.open({
+            templateUrl: 'ProductDetails/productDetails.html',
+            resolve: {
+                product: function () {
+                    return product;
+                }
+            }
+        });
+
+        // productService.set(product);
+        // $location.path("/productDetails");
     }
 
 }]);
