@@ -3,6 +3,9 @@
 <!--[if gt IE 8]><!-->
 <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>My AngularJS App</title>
@@ -26,45 +29,12 @@
 
 </head>
 <body>
-
-<!-- START PAGE SOURCE -->
-<div class="tail-top" ng-controller="mainController as mainCtl">
-    <header>
-        <div class="container">
-            <span class="top-info">24/7 Sales &amp; Support + 1 800 234 5678 &nbsp; l &nbsp; <a href="#">Hot Deals</a> &nbsp; l &nbsp;
-                <a href="#">Search</a> <a >{{userService.userEmail}}</a> </span>
-            <li ><a href="#!/loginModal" id="login">login</a>
-            <li ><a href="#!/registration" id="register">register</a>
-
-            </li>
-        </div>
-
-    </header>
-
-    <!-- *** TOP BAR END *** -->
-
-    <!-- *** NAVBAR ***
- _________________________________________________________ -->
-
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Music Shop</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#!/home">Home</a></li>
-                <li><a href="#!/products">Products</a></li>
-                <li><a href="#!/about">About</a></li>
-                <li><a href="#!/contact">Contact</a></li>
+<div ng-include="'tamplates/navBar'"></div>
 
 
-            </ul>
-        </div>
-    </nav>
-</div>
+
 <div ng-view></div>
 
-<div><p>{{1+6}}</p></div>
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
 -->
@@ -76,6 +46,9 @@
 <script src="Registration/registrationCtrl.js"></script>
 <script src="Login/loginController.js"></script>
 <script src="ProductDetails/detailsController.js"></script>
+<script src="Cart/cartController.js"></script>
+
+
 <script src="shared/ui-bootstrap-tpls-2.5.0.min%20.js"></script>
 
 <script src="components/version/version.js"></script>

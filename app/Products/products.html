@@ -1,40 +1,56 @@
-
 <div ng-controller="productsController as prodCtrl">
-  <div class="container">
-    <div class="row">
-      <div  ng-repeat="category in prodCtrl.allCatrgories" class="col-sm-2 ">
-        <li><a ng-click="prodCtrl.selctedCategory(category)">{{category}}</a></li>
-      </div>
-      <div  ng-repeat="product in prodCtrl.products | filter : {Category : prodCtrl.selectedCat}" class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <h4 class="text-center"><span class="label label-info">{{product.Manufactur}}</span></h4>
-          <img src="http://placehold.it/650x450&text=Galaxy S5" class="img-responsive">
-          <div class="caption">
-            <div class="row">
-              <div class="col-md-6 col-xs-6">
-                <h3>{{product.Musical_instrument}}</h3>
-              </div>
-              <div class="col-md-6 col-xs-6 price">
-                <h3>
-                  <label>{{product.Price | currency}}</label></h3>
-              </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div id="imaginary_container">
+                    <div class="input-group stylish-input-group">
+                        <input type="text" class="form-control" placeholder="Search" ng-model="search.Description">
+                        <span class="input-group-addon">
+                        <button type="submit" ng-click="">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                    </div>
+                </div>
             </div>
-            <p>{{product.Description}}</p>
-            <div class="row">
-              <div class="col-md-6">
-                <a class="btn btn-primary btn-product" ng-click="homeC.detail(product.Musical_instrument)"><span class="glyphicon glyphicon-thumbs-up" ></span>View Details</a>
-              </div>
-              <div class="col-md-6">
-                <a href="#" class="btn btn-success btn-product"><span
-                        class="glyphicon glyphicon-shopping-cart"></span> Buy Now!</a></div>
+        </div>
+    </div>
+            <div class="col-xs-2">
+                <p>Categories :</p>
+                <div ng-repeat="category in prodCtrl.allCatrgories"
+                     class="col-sm-12 ">
+                    <li><a href="#" ng-click="prodCtrl.selctedCategory(category)">{{category}}</a></li>
+                </div>
+                <div>Sort By:
+                    <li><a href="#" ng-click="prodCtrl.selctedCategory(category)">Name</a></li>
+                </div>
             </div>
 
-          </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-9">
+
+
+                <div ng-show="!prodCtrl.showSerchProduct" ng-repeat="product in prodCtrl.products | filter:search"
+                     class="col-sm-6 col-md-4">
+                    <div ng-include="'tamplates/productBox'"></div>
+                </div>
+                <div ng-show="!prodCtrl.isCategoryChoose" ng-repeat="product in prodCtrl.products "
+                     class="col-sm-6 col-md-4">
+                    <div ng-include="'tamplates/productBox'"></div>
+                </div>
+                <div ng-show="prodCtrl.isCategoryChoose" ng-repeat="product in prodCtrl.productsByCategory  "
+                     class="col-sm-6 col-md-4">
+                    <div ng-include="'tamplates/productBox'"></div>
+                </div>
+
+            </div>
+            <div class="col-xs-2" style="border:2px solid black;">Recomended for you:
+                <div ng-repeat="product in prodCtrl.recomededProduct">
+                    <div ng-include="'tamplates/productBox'"></div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div ng-repeat = "p in prodCtrl.products">
-    <h1>Name :  {{p.Musical_instrument}}</h1>
-  </div>
+
 </div>

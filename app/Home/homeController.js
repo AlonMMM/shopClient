@@ -8,7 +8,7 @@ angular.module('homeApp', ['ngRoute','ui.bootstrap'])
   });
 }])
 
-.controller('homeCtrl', ['productService','$http','$location','$uibModal', function(productService,$http,$location,$uibModal) {
+.controller('homeCtrl', ['productService','productDetailsService','$http','$location','$uibModal', function(productService,productDetailsService,$http,$location,$uibModal) {
 
     var reqUrl = "http://localhost:3100/musicalsInstruments/getTop5Products";
 
@@ -25,22 +25,15 @@ angular.module('homeApp', ['ngRoute','ui.bootstrap'])
                     console.log(reason.message)
                 }
             )
-    }
+    };
 
     self.getTop5Product();
 
-    self.detail = function (product) {
-        $uibModal.open({
-            templateUrl: 'ProductDetails/productDetails.html',
-            resolve: {
-                product: function () {
-                    return product;
-                }
-            }
-        });
+    self.showDetails = function (product) {
+        productDetailsService.productDetails(product);
 
-        // productService.set(product);
-        // $location.path("/productDetails");
     }
+
+
 
 }]);

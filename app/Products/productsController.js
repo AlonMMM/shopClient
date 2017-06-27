@@ -2,7 +2,7 @@
 
 angular.module('productsApp', ['ngRoute'])
 
-    .config(['$routeProvider', function($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/products', {
             templateUrl: 'Products/products.html'
 
@@ -10,16 +10,21 @@ angular.module('productsApp', ['ngRoute'])
     }])
 
 
-    .controller('productsController', ['productService','$http', function(productService,$http) {
+    .controller('productsController', ['productService', '$http', function (productService, $http) {
         var reqUrl = "http://localhost:3100/musicalsInstruments/getAllProducts";
         var self = this;
         self.allCatrgories = productService.allCategory();
-
-        self.selctedCategory = function (category) {
-            self.selectedCat = category;
-        };
+        self.isCategoryChoose = false;
+        self.productPerCategory=[];
+        self.recomededProduct = [];
         self.products = [];
+
+        self.searchProduct = "";
+
+        self.showSerchProduct = false;
+
         //get all products and push into products arr.
+
         $http.get(reqUrl)
             .then(function (response) {
                     console.log("**http Get!");
@@ -27,30 +32,37 @@ angular.module('productsApp', ['ngRoute'])
                     self.products = productArr;
                     console.log(productArr);
 
-                },function (reason) {
+                }, function (reason) {
                     console.log(reason.message)
                 }
-            )
+            );
 
-        self.getCategory = function(){
+        $http.post("http://localhost:3100/users/getMatchProduct",{mail:"test"})
+            .then(function (response) {
+                    console.log("**http Get!");
+                    var productArr = response.data;
+                    self.recomededProduct = productArr;
+                    console.log(productArr);
 
-        }
-        }]);
-
-myApp.filter('filterCategories', function ($log) {
-    return function (items, cat) {
-        var result = {};
-
-        if (cat !== "") {
-            angular.forEach(items, function (value, key) {
-                if (key.includes(cat)) {
-                    result[key] = value;
+                }, function (reason) {
+                    console.log(reason.message)
                 }
-            });
+            );
+        self.productCat = [];
+        self.selctedCategory = function (category) {
+            self.isCategoryChoose=true;
+            self.selectedCat = {Category : category};
+            $http.post("http://localhost:3100/musicalsInstruments/getProductByCategory", self.selectedCat)
+                .then(function (response) {
+                        console.log("**http Get!");
+                        var productArr = response.data;
+                        self.productsByCategory = productArr;
+                        console.log(productArr);
+
+                    }, function (reason) {
+                        console.log(reason.message)
+                    }
+                )
         }
-        else {
-            result = items;
-        }
-        return result;
-    };
-})
+        //categories sorter:
+    }]);
