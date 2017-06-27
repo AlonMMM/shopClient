@@ -12,18 +12,14 @@
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
     <link rel="stylesheet" href="app.css">
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-
     <!-- styles -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/layout.css" rel="stylesheet">
     <link href="css/reset.css" rel="stylesheet">
     <link href="css/productStyle.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
     <!-- theme stylesheet -->
-
     <!-- your stylesheet with modifications -->
-
 </head>
 <body>
 
@@ -32,19 +28,19 @@
     <header>
         <div class="container">
             <span class="top-info">24/7 Sales &amp; Support + 1 800 234 5678 &nbsp; l &nbsp; <a href="#">Hot Deals</a> &nbsp; l &nbsp;
-                <a href="#">Search</a> <a >{{userService.userEmail}}</a> </span>
+                <a href="#">Search</a> </span>
             <li ><a href="#!/loginModal" id="login">login</a>
             <li ><a href="#!/registration" id="register">register</a>
+            <li ><a href="#!/home" id="logout" ng-click="mainCtl.logOut()">Log out</a>
 
             </li>
         </div>
 
     </header>
-
+    <header >Hello {{mainCtl.userService.userEmail}}! {{ mainCtl.userService.lastLogin }}</header>
     <!-- *** TOP BAR END *** -->
-
     <!-- *** NAVBAR ***
- _________________________________________________________ -->
+    _________________________________________________________ -->
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -86,6 +82,11 @@
 <script src="components/front.js"></script>
 <script src="components/owl.carousel.min.js"></script>
 <script src="components/bootstrap-hover-dropdown.js"></script>
+<script src="shared/angular-local-storage.js"></script>
+<script src="shared/angular-local-storage.min.js"></script>
+<script src="shared/angular-local-storage.min.js.map"></script>
+
+
 
 </body>
 </html>
