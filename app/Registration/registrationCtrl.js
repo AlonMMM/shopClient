@@ -86,9 +86,12 @@ angular.module('registrationApp', ['ngRoute'])
                 $http.post('http://localhost:3100/users/verifyUserAndRestorePass',  c.forgetUser)
                     .then(function (response) {
                             var res = response.data;
-                            c.response=res[0].password;
+                            c.response=res[0].Password;
+                            console.log(res[0].Password);
+                            console.log(c.response);
                         }, function (reason) {
                             c.response = "error is " + reason.message;
+                            console.log(reason);
                         }
                     )
             }
