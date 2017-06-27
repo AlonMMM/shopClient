@@ -21,6 +21,7 @@ myApp.controller('mainController', ['userService','$http','$location','$uibModal
     self.userEmail = userService.getUserEmail();
 }]);
 
+
 myApp.factory('productService', function() {
     var service = {};
     service.productCategories=["Piano","Guitars","Saxophones","Trumpets","Flutes","Drums","Violins"];
