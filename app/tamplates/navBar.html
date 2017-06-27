@@ -15,12 +15,13 @@
                     <a href="#!/cart" type="button" class="btn btn-default btn-sm" >
                         <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
                     </a>
+                    <li ><a href="#!/home" id="logout" ng-click="mainCtl.logOut()">Log out</a>
                 </div>
             </div>
         </div>
 
     </header>
-
+    <header >Hello {{mainCtl.userService.userEmail}}! {{ mainCtl.userService.lastLogin }}</header>
     <!-- *** TOP BAR END *** -->
 
     <!-- *** NAVBAR ***

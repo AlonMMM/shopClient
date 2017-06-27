@@ -17,7 +17,7 @@ var myApp=angular.module('myApp', [
 
 myApp.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');
-    $routeProvider.otherwise({redirectTo: '/products'});
+    $routeProvider.otherwise({redirectTo: '/home'});
 }]);
 myApp.controller('mainController', ['userService','cartService','productDetailsService','$http','$location','$uibModal','localStorageService','$window', function(userService,cartService,productDetailsService,$http,$location,$uibModal, localStorageService,$window){
     var self = this;
