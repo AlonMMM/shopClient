@@ -43,7 +43,7 @@ myApp.factory('userService', ['$http', function ($http) {
     service.getUserEmail = function () {
         return service.userEmail;
     }
-    
+
     service.isLoggedIn = false;
     service.login = function (user) {
         return $http.post('http://localhost:3100/Login', user)
