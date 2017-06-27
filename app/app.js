@@ -13,7 +13,8 @@ myApp.config(['$locationProvider', '$routeProvider', function ($locationProvider
     $locationProvider.hashPrefix('!');
 
     $routeProvider.otherwise({redirectTo: '/products'});
-
+    var self= this;
+    self.userName='Guest';
 
 }]);
 
