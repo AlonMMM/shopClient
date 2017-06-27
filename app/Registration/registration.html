@@ -30,39 +30,44 @@
                                 </button>
 
                             </div>
-                            // -----------------forgot your password-------------------------
+                            <!-- /#forget your password -->
                         </form>
                         <div class="col-md-6">
                             <div class="box">
-                                <h1>Login</h1>
-                                <p class="lead">Forgot your password?</p>
-                                <p>Please sign in so you will be able to enjoy a whole world of high quality musical instruments!</p>
+                                <h1>Forgot your password?</h1>
+                                <p>Please answer the questions so we will help you restore your password!</p>
                                 <hr>
-                                <form method="post" ng-model="loginForm" name="loginForm">
+                                <form method="post" ng-model="forgetForm" name="forgetForm">
                                     <div class="form-group">
-                                        <label>Mail</label>
-                                        <input type="text"  class="form-control" name="mail" ng-model="registerCtrl.user.mail" required>
-                                        <span style="color:red" ng-show="loginForm.mail.$dirty && loginForm.mail.$invalid">
-                                <span ng-show="loginForm.mail.$error.required">Email is required.</span>
+                                        <label>Enter your mail</label>
+                                        <input type="text"  class="form-control" name="mail" ng-model="registerCtrl.forgetUser.mail" required>
+                                        <span style="color:red" ng-show="forgetForm.mail.$dirty && loginForm.mail.$invalid">
+                                <span ng-show="forgetForm.mail.$error.required">Email is required.</span>
                                   </span>
                                     </div>
                                     <div class="form-group">
-                                        <label>Password</label>
-                                        <input type="text" class="form-control" name="pass" ng-model="registerCtrl.user.pass" required>
-                                        <span style="color:red" ng-show="loginForm.pass.$touched">
-                                <span ng-show="loginForm.pass.$error.required">Password is required.</span>
+                                        <label>What is the name of your first school?</label>
+                                        <input type="text" class="form-control" name="school" ng-model="registerCtrl.forgetUser.school" required>
+                                        <span style="color:red" ng-show="forgetForm.school.$touched">
+                                <span ng-show="forgetForm.school.$error.required">School is required.</span>
+                                  </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>What is the name of your first pet?</label>
+                                        <input type="text" class="form-control" name="pet" ng-model="registerCtrl.forgetUser.firstPet" required>
+                                        <span style="color:red" ng-show="forgetForm.pet.$touched">
+                                <span ng-show="forgetForm.pet.$error.required">Pet name is required.</span>
                                   </span>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid" ng-click="registerCtrl.logIn(loginForm.$valid)">Log in
+                                        <button type="submit" class="btn btn-primary" ng-disabled="forgetForm.$invalid" ng-click="registerCtrl.restorePassword(forgetForm.$valid)">Restore my password
                                         </button>
-
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    // -----------------forgot your password-------------------------
+                    <!-- /#forget your password -->
                 </div>
                 <!-- /#start register -->
                 <div class="col-md-6">
@@ -166,7 +171,7 @@
                                   </span>
                             </div>
                             <div class="form-group">
-                                <label>School (for security reasons only)</label>
+                                <label>First school (for security reasons only)</label>
                                 <input type="text" class="form-control" name="school" ng-model="registerCtrl.school" required>
                                 <span style="color:red" ng-show="registrationForm.school.$touched">
                                 <span ng-show="registrationForm.school.$error.required">School is required.</span>

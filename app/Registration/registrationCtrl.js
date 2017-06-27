@@ -76,19 +76,24 @@ angular.module('registrationApp', ['ngRoute'])
                       }
                   )
           }
-            // var inData= {
-            //     "mail":c.lmail,
-            //     "pass":c.lpassword};
-            //
-            // $http.post(loginUrl, inData)
-            //     .then(function (response) {
-            //             var res = response.data;
-            //             c.response=res[0].Mail;
-            //             if (c.lmail===res[0].Mail)
-            //                 c.logedIn=c.lmail;
-            //         }, function (reason) {
-            //             c.response = "error is " + reason.message;
-            //         }
-            //     )
+        }
+        c.forgetUser= {
+            mail:'',
+            school:'',
+            firstPet: ''};
+        c.restorePassword =function(valid) {
+            if (valid) {
+                $http.post('http://localhost:3100/users/verifyUserAndRestorePass',  c.forgetUser)
+                    .then(function (response) {
+                            var res = response.data;
+                            c.response=res[0].Password;
+                            console.log(res[0].Password);
+                            console.log(c.response);
+                        }, function (reason) {
+                            c.response = "error is " + reason.message;
+                            console.log(reason);
+                        }
+                    )
+            }
         }
     }]);
