@@ -19,32 +19,31 @@
                 <p>Categories :</p>
                 <div ng-repeat="category in prodCtrl.allCatrgories"
                      class="col-sm-12 ">
-                    <li><a href="#" ng-click="prodCtrl.selctedCategory(category)">{{category}}</a></li>
+                    <li><a  ng-click="prodCtrl.selctedCategory(category)">{{category}}</a></li>
                 </div>
                 <div>Sort By:
-                    <li><a href="#" ng-click="prodCtrl.selctedCategory(category)">Name</a></li>
+                    <li><a  ng-click="prodCtrl.selctedCategory(category)">Name</a></li>
                 </div>
             </div>
 
     <div class="container">
         <div class="row">
-            <div class="col-xs-9">
-                <div ng-show="!prodCtrl.showSerchProduct" ng-repeat="product in prodCtrl.products | filter:search"
-                     class="col-sm-6 col-md-4">
+            <div class="col-xs-8">
+                <div ng-show="!prodCtrl.isCategoryChoose" ng-repeat="product in prodCtrl.products | filter:search"
+                     class="col-sm-6 col-md-5">
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
 
                 <div ng-show="prodCtrl.isCategoryChoose" ng-repeat="product in prodCtrl.productsByCategory"
-                     class="col-sm-6 col-md-4">
+                     class="col-sm-6 col-md-5">
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
             </div>
-            <div class="col-xs-2" style="border:2px solid black;">Recomended for you:
+            <div ng-show="prodCtrl.userService.isLoggedIn" class="col-xs-3" style="border:2px solid black;">Recomended for you:
                 <div ng-repeat="product in prodCtrl.recomededProduct">
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>

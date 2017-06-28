@@ -1,9 +1,24 @@
 
 <div ng-controller="homeCtrl as homeC">
     <h1 class="home">Welcome</h1>
-    <h2 class="home">Our top hotest products: </h2>
-    <div  ng-repeat="product in homeC.products" class="col-sm-6 col-md-4">
-        <div ng-include="'tamplates/productBox'"></div>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-6">
+                <h2 class="home">Our top hotest products: </h2>
+                <div  ng-repeat="product in homeC.top5Products" class="col-sm-6 col-md-6">
+                    <div ng-include="'tamplates/productBox'"></div>
+                </div>
+            </div>
+            <h2 ng-show="homeC.userService.isLoggedIn" class="home">Our last Month Product: </h2>
+            <div ng-show="homeC.userService.isLoggedIn" class="col-xs-6" style="border:2px solid black;" >
+                <div  ng-repeat="product in homeC.lastestProduct" class="col-sm-6 col-md-6">
+                    <div ng-include="'tamplates/productBox'"></div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 

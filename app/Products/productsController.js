@@ -10,7 +10,7 @@ angular.module('productsApp', ['ngRoute'])
     }])
 
 
-    .controller('productsController', ['productService', '$http', function (productService, $http) {
+    .controller('productsController', ['userService','productService', '$http', function (userService,productService, $http) {
         var reqUrl = "http://localhost:3100/musicalsInstruments/getAllProducts";
         var self = this;
         self.allCatrgories = productService.allCategory();
@@ -18,11 +18,13 @@ angular.module('productsApp', ['ngRoute'])
         self.productPerCategory=[];
         self.recomededProduct = [];
         self.products = [];
-
+        self.userService = userService;
         self.searchProduct = "";
 
         self.showSerchProduct = false;
-
+        self.searchInputIsDirty = function(){
+            return self.searchProduct==="";
+        }
         //get all products and push into products arr.
 
         $http.get(reqUrl)
@@ -37,7 +39,7 @@ angular.module('productsApp', ['ngRoute'])
                 }
             );
 
-        $http.post("http://localhost:3100/users/getMatchProduct",{mail:"test"})
+        $http.post("http://localhost:3100/users/getMatchProduct",{mail: userService.userEmail})
             .then(function (response) {
                     console.log("**http Get!");
                     var productArr = response.data;

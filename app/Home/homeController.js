@@ -8,17 +8,38 @@ angular.module('homeApp', ['ngRoute','ui.bootstrap'])
   });
 }])
 
-.controller('homeCtrl', ['productService','productDetailsService','$http','$location','$uibModal', function(productService,productDetailsService,$http,$location,$uibModal) {
+.controller('homeCtrl', ['userService','productService','productDetailsService','$http','$location','$uibModal', function(userService,productService,productDetailsService,$http,$location,$uibModal) {
 
     var reqUrl = "http://localhost:3100/musicalsInstruments/getTop5Products";
 
     var self = this;
-    self.products = [];
+    self.top5Products = [];
+    self.lastestProduct = [];
+    self.userService = userService;
+
     self.getTop5Product =function() {
+        //synchonize problem - need to return promise
+        return new Promise(function (resolve, reject) {
         $http.get(reqUrl)
             .then(function (response) {
                     var productArr = response.data;
-                    self.products = productArr;
+                    self.top5Products = productArr;
+                    console.log(productArr);
+                    resolve();
+
+                }, function (reason) {
+                    console.log(reason.message)
+                reject();
+                }
+            )
+        });
+    };
+
+    self.getLatestProduct =function() {
+        $http.get("http://localhost:3100/musicalsInstruments/latestProducts")
+            .then(function (response) {
+                    var productArr = response.data;
+                    self.lastestProduct = productArr;
                     console.log(productArr);
 
                 }, function (reason) {
@@ -27,7 +48,9 @@ angular.module('homeApp', ['ngRoute','ui.bootstrap'])
             )
     };
 
-    self.getTop5Product();
+    self.getTop5Product()
+        .then(self.getLatestProduct);
+
 
     self.showDetails = function (product) {
         productDetailsService.productDetails(product);

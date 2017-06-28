@@ -9,13 +9,13 @@
 
                 </div>
                 <div class="col-xs-3">
-                    <a href="#!/registration" type="button" class="btn btn-default btn-sm" >
+                    <a ng-show="!mainCtl.userService.isLoggedIn" href="#!/registration" type="button" class="btn btn-default btn-sm" >
                         <span ></span> login
                     </a>
-                    <a href="#!/cart" type="button" class="btn btn-default btn-sm" >
+                    <a  ng-show="mainCtl.userService.isLoggedIn" href="#!/cart" type="button" class="btn btn-default btn-sm" >
                         <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
                     </a>
-                    <li ><a href="#!/home" id="logout" ng-click="mainCtl.logOut()">Log out</a>
+                    <a ng-show="mainCtl.userService.isLoggedIn" href="#!/home" class="btn btn-default btn-sm"  id="logout" ng-click="mainCtl.logOut()">Log out</a>
                 </div>
             </div>
         </div>

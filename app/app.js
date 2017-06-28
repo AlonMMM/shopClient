@@ -23,6 +23,8 @@ myApp.controller('mainController', ['userService','cartService','productDetailsS
     var self = this;
     self.userEmail = userService.userEmail;
     self.userService = userService;
+    self.cartService = cartService;
+    self.productDetailsService = productDetailsService;
 
     self.logOut=function() {
         userService.logOut(localStorageService);
@@ -31,7 +33,7 @@ myApp.controller('mainController', ['userService','cartService','productDetailsS
     }
 
     self.cartService = cartService;
-    self.productDetailsService = productDetailsService;
+
 
     self.openContactModal = function () {
         $uibModal.open({
@@ -69,9 +71,15 @@ myApp.factory('cartService', function () {
         service.totalPrice += product.Price;
         service.productInCart.push(product);
     };
+    service.removeFromCart = function (product) {
+        service.totalPrice -= product.Price;
+        var index = service.productInCart.indexOf(product);
+        service.productInCart.splice(index, 1);
+    };
     service.getProductInCart = function () {
         return service.productInCart;
     };
+
     service.getTotalPrice = function () {
         return service.totalPrice;
     };
@@ -152,6 +160,10 @@ myApp.factory('userService', ['$http', function ($http) {
         service.userEmail= "Guest";
         service.isLoggedIn = false;
         service.lastLogin = "";
+    };
+
+    service.getLoggedIn = function(){
+        return service.isLoggedIn;
     }
     return service;
 }]);

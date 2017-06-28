@@ -16,10 +16,10 @@
         <p>{{product.Description}}</p>
         <div class="row">
             <div class="col-md-6">
-                    <a class="btn btn-primary btn-product" ng-click="mainCtrl.productDetailsService.productDetails(product.Musical_instrument)"><span ></span>View Details</a>
+                    <a class="btn btn-primary btn-product" ng-click="mainCtrl.productDetailsService.productDetails(product)"><span ></span>View Details</a>
             </div>
             <div class="col-md-6">
-                <a href="#" class="btn btn-success" ng-click="mainCtrl.cartService.insertToCart(product)"><span></span> Add to Cart!</a></div>
+                <a class="btn btn-success" ng-click="mainCtrl.cartService.insertToCart(product)"><span></span> Add to Cart!</a></div>
         </div>
     </div>
 </div>
