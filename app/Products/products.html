@@ -22,23 +22,35 @@
                     <li><a  ng-click="prodCtrl.selctedCategory(category)">{{category}}</a></li>
                 </div>
                 <div>Sort By:
-                    <li><a  ng-click="prodCtrl.selctedCategory(category)">Name</a></li>
+                    <li><a  ng-click="prodCtrl.sortChooseen(); filterByCategory = 'Price'">Price</a></li>
+                    <li><a  ng-click="prodCtrl.sortChooseen(); filterByCategory = 'Description'">Name</a></li>
+                    <li><a  ng-click="prodCtrl.sortChooseen(); filterByCategory = 'Musical_instrument'">Id</a></li>
+                    <li><a  ng-click="prodCtrl.sortChooseen(); filterByCategory = 'Manufactur'">Manufactur</a></li>
                 </div>
             </div>
 
     <div class="container">
         <div class="row">
             <div class="col-xs-8">
-                <div ng-show="!prodCtrl.isCategoryChoose" ng-repeat="product in prodCtrl.products | filter:search"
+                <div ng-show="!prodCtrl.isCategoryChoose && !prodCtrl.sortChoose" ng-repeat="product in prodCtrl.products | filter:search"
                      class="col-sm-6 col-md-5">
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
 
-                <div ng-show="prodCtrl.isCategoryChoose" ng-repeat="product in prodCtrl.productsByCategory"
+
+                    <div ng-show="prodCtrl.sortChoose" ng-repeat="product in prodCtrl.productsByCategory | orderBy:filterByCategory"
+                         class="col-sm-6 col-md-5">
+                        <div ng-include="'tamplates/productBox'"></div>
+                    </div>
+
+                <div ng-show="prodCtrl.isCategoryChoose && !prodCtrl.sortChoose" ng-repeat="product in prodCtrl.productsByCategory"
                      class="col-sm-6 col-md-5">
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
             </div>
+
+
+
             <div ng-show="prodCtrl.userService.isLoggedIn" class="col-xs-3" style="border:2px solid black;">Recomended for you:
                 <div ng-repeat="product in prodCtrl.recomededProduct">
                     <div ng-include="'tamplates/productBox'"></div>

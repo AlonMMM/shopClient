@@ -21,6 +21,7 @@ myApp.config(['$locationProvider', '$routeProvider', function ($locationProvider
 }]);
 myApp.controller('mainController', ['userService','cartService','productDetailsService','$http','$location','$uibModal','localStorageService','$window', function(userService,cartService,productDetailsService,$http,$location,$uibModal, localStorageService,$window){
     var self = this;
+    self.test = "test";
     self.userEmail = userService.userEmail;
     self.userService = userService;
     self.cartService = cartService;

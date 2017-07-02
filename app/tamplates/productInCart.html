@@ -1,27 +1,39 @@
-
-    <div ng-controller="mainController as mainCtrl">
-        <td class="col-sm-8 col-md-6">
-            <div class="media">
-                <a class="thumbnail pull-left" href="#"> <img class="media-object"
-                                                              src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-                                                              style="width: 72px; height: 72px;"> </a>
-                <div class="media-body">
-                    <h4 class="media-heading"><a href="#">{{product.Musical_instrument}}</a></h4>
-                    <h5 class="media-heading"> by <a href="#">{{product.Manufactur}}</a></h5>
-                    <span>Status: </span><span class="text-success"><strong>?</strong></span>
+<div ng-controller="mainController as mainCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="media">
+                    <a class="thumbnail pull-left" href="#"> <img class="media-object"
+                                                                  src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
+                                                                  style="width: 72px; height: 72px;"> </a>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="#">{{product.Musical_instrument}}</a></h4>
+                        <h5 class="media-heading"> by <a href="#">{{product.Manufactur}}</a></h5>
+                        <span>Status: </span><span class="text-success"><strong>?</strong></span>
+                    </div>
                 </div>
             </div>
-        <td class="col-sm-1 col-md-1 text-center"><strong>{{product.Price | currency}}</strong></td>
-        <td class="col-sm-1 col-md-1 text-center"><strong>{{product.Price | currency}}</strong></td>
-        <td class="col-sm-1 col-md-1">
-            <a class="btn btn-danger" ng-click="mainCtrl.cartService.removeFromCart(product)">
-                <span class="glyphicon glyphicon-remove"></span> Remove
-            </a></td>
-        <td class="col-sm-2">
-            <div class="col-md-6">
-                <a class="btn btn-primary btn-product"
-                   ng-click="mainCtrl.productDetailsService.productDetails(product)"><span></span>View Details</a>
+            <div class="col-sm-1">
+            <input type="email" class="form-control" id="exampleInputEmail1" value="2">
             </div>
-        </td>
-        </td>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <th class="text-center"><strong> x {{product.Price | currency}}</strong></th>
+            </div>
+            <div class="col-sm-2">
+                <th class="text-center"><strong>{{product.Price | currency}}</strong></th>
+            </div>
+            <div class="col-sm-2">
+                <a style="width: 115px;" class="btn btn-danger" ng-click="mainCtrl.cartService.removeFromCart(product)">
+                    <span class="glyphicon glyphicon-remove"></span> Remove
+                </a>
+
+
+                <a style="width: 115px;" class="btn btn-primary btn-product"
+                   ng-click="mainCtrl.productDetailsService.productDetails(product)"><span
+                        class="glyphicon glyphicon-info-sign"></span> View Details</a>
+            </div>
+        </div>
     </div>
+
+</div>

@@ -15,16 +15,28 @@ angular.module('productsApp', ['ngRoute'])
         var self = this;
         self.allCatrgories = productService.allCategory();
         self.isCategoryChoose = false;
-        self.productPerCategory=[];
+        self.sortChoose = false;
+
+        self.AllProduct = [];
+
         self.recomededProduct = [];
         self.products = [];
+
+
         self.userService = userService;
         self.searchProduct = "";
 
         self.showSerchProduct = false;
+
         self.searchInputIsDirty = function(){
             return self.searchProduct==="";
-        }
+        };
+
+        //buttun sort clicked
+        self.sortChooseen = function(){
+            self.sortChoose = true;
+
+        };
         //get all products and push into products arr.
 
         $http.get(reqUrl)
@@ -32,6 +44,7 @@ angular.module('productsApp', ['ngRoute'])
                     console.log("**http Get!");
                     var productArr = response.data;
                     self.products = productArr;
+                    self.productsByCategory=productArr;
                     console.log(productArr);
 
                 }, function (reason) {
@@ -60,6 +73,7 @@ angular.module('productsApp', ['ngRoute'])
                         var productArr = response.data;
                         self.productsByCategory = productArr;
                         console.log(productArr);
+
 
                     }, function (reason) {
                         console.log(reason.message)

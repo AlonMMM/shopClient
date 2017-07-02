@@ -17,5 +17,8 @@ angular.module('cartApp', ['ngRoute','ui.bootstrap'])
         self.cartService = cartService;
         self.totalPrice = cartService.getTotalPrice();
 
-
+        self.goToProductPage= function()
+        {
+            $location.path('products');
+        }
     }]);
