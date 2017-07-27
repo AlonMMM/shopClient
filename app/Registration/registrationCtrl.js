@@ -8,7 +8,7 @@ angular.module('registrationApp', ['ngRoute'])
         });
     }])
 
-    .controller('registerController', ['userService', '$http','$location', '$window','localStorageService', function(userService, $http,$location, $window,localStorageService) {
+    .controller('registerController', ['userService', '$http','$location', '$window', function(userService, $http,$location, $window) {
         var registerUrl = "http://localhost:3100/users/registerUser";
         var c= this;
         c.logedIn="";
@@ -69,8 +69,7 @@ angular.module('registrationApp', ['ngRoute'])
                       $window.alert('You are logged in!');
                       $location.path('/home');
                       c.response= succes.data;
-                       var musicMail= c.user.mail+",";
-                       cookieSet(musicMail , localStorageService , c.user.mail, c.user.pass);
+                       //cookieSet(localStorageService , c.user.mail, c.user.pass);
                   },function(error){
                       c.response= error.message;
                       $window.alert('Login failed!');
@@ -97,38 +96,4 @@ angular.module('registrationApp', ['ngRoute'])
                     )
             }
         }
-
-        // c.logout=function(){
-        //     userService.logOut()
-        //         .then(function (succes){
-        //                 $window.alert('Bye Bye see you next time!!');
-        //                 $location.path('/home');
-        //             },function(error){
-        //                 c.response= error.message;
-        //                 $window.alert('Logout failed!');
-        //             }
-        //         )
-        // }
     }]);
-
-function cookieSet(musicMail,localStorageService , mail, password){
-    var cookie = "";
-    var decodeCookie = decodeURIComponent(document.cookie);
-    var arr = decodeCookie.split(';');
-    for (var i = 0; i < arr.length; i++) {
-        var t = arr[i];
-        while (t.charAt(0) === ' ') {
-            t = t.substring(1);
-        }
-        if (t.indexOf(musicMail) === 0) {
-            cookie = t.substring(musicMail.length, t.length);
-        }
-    }
-    if (cookie == ""){
-        if(localStorageService.cookie.set(mail, password))
-            console.log("cookie good");
-        else
-            console.log("cookie bad");
-    }
-    else console.log("cookie already exist");
-}
