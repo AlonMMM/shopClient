@@ -8,7 +8,7 @@ angular.module('registrationApp', ['ngRoute'])
         });
     }])
 
-    .controller('registerController', ['userService', '$http','$location', '$window','localStorageService', function(userService, $http,$location, $window,localStorageService) {
+    .controller('registerController', ['userService', '$http','$location', '$window', function(userService, $http,$location, $window) {
         var registerUrl = "http://localhost:3100/users/registerUser";
         var c= this;
         c.logedIn="";
@@ -69,8 +69,7 @@ angular.module('registrationApp', ['ngRoute'])
                       $window.alert('You are logged in!');
                       $location.path('/home');
                       c.response= succes.data;
-                       var musicMail= c.user.mail+",";
-                       cookieSet(musicMail , localStorageService , c.user.mail, c.user.pass);
+                       //cookieSet(localStorageService , c.user.mail, c.user.pass);
                   },function(error){
                       c.response= error.message;
                       $window.alert('Login failed!');
