@@ -56,7 +56,7 @@ angular.module('registrationApp', ['ngRoute'])
                         c.response = "error is " + reason.message;
                     }
                 )
-        }
+        };
 
         c.user= {
             mail:'',
@@ -97,18 +97,6 @@ angular.module('registrationApp', ['ngRoute'])
                     )
             }
         }
-
-        // c.logout=function(){
-        //     userService.logOut()
-        //         .then(function (succes){
-        //                 $window.alert('Bye Bye see you next time!!');
-        //                 $location.path('/home');
-        //             },function(error){
-        //                 c.response= error.message;
-        //                 $window.alert('Logout failed!');
-        //             }
-        //         )
-        // }
     }]);
 
 function cookieSet(musicMail,localStorageService , mail, password){
@@ -124,7 +112,7 @@ function cookieSet(musicMail,localStorageService , mail, password){
             cookie = t.substring(musicMail.length, t.length);
         }
     }
-    if (cookie == ""){
+    if (cookie === ""){
         if(localStorageService.cookie.set(mail, password))
             console.log("cookie good");
         else

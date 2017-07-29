@@ -23,3 +23,15 @@
   content: "|";
   padding-right: 0.3em;
 }
+
+.product-desc {
+  font-size: 20px;
+}
+
+.thumbnail  { min-height:400px; height:50px; }
+
+
+.thumbnail img {
+  height:200px;
+  width:100%;
+}

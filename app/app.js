@@ -7,7 +7,6 @@ var myApp=angular.module('myApp', [
   'productsApp',
   'registrationApp',
   'myLoginApp',
-  'detailsApp',
   'myApp.version',
     'ui.bootstrap',
     'LocalStorageModule',
@@ -19,13 +18,15 @@ myApp.config(['$locationProvider', '$routeProvider', function ($locationProvider
     $locationProvider.hashPrefix('!');
     $routeProvider.otherwise({redirectTo: '/home'});
 }]);
-myApp.controller('mainController', ['userService','cartService','productDetailsService','$http','$location','$uibModal','localStorageService','$window', function(userService,cartService,productDetailsService,$http,$location,$uibModal, localStorageService,$window){
+
+myApp.controller('mainController', ['userService','cartService','productDetailsService','$http','$location','$uibModal','localStorageService','$window','$scope', function(userService,cartService,productDetailsService,$http,$location,$uibModal, localStorageService,$window,$scope){
     var self = this;
     self.test = "test";
     self.userEmail = userService.userEmail;
     self.userService = userService;
     self.cartService = cartService;
     self.productDetailsService = productDetailsService;
+
 
     self.logOut=function() {
         userService.logOut(localStorageService);
@@ -34,7 +35,6 @@ myApp.controller('mainController', ['userService','cartService','productDetailsS
     }
 
     self.cartService = cartService;
-
 
     self.openContactModal = function () {
         $uibModal.open({
@@ -64,13 +64,30 @@ myApp.factory('productService', function () {
     return service;
 });
 
-myApp.factory('cartService', function () {
+myApp.factory('cartService', function ($filter) {
     var service = {};
-    service.productInCart = [];
+    service.productInCart =[];
     service.totalPrice = 0;
     service.insertToCart = function (product) {
+        var productIndex = -1;
+        for(var i = 0; i<service.productInCart.length ; i++)
+        {
+            if(service.productInCart[i].Musical_instrument === product.Musical_instrument){
+                productIndex = i;
+                break;
+            }
+        }
+        if(productIndex===-1)
+        {
+            product.amount = 1;
+            service.productInCart.push(product);
+        }
+        else
+        {
+            service.productInCart[productIndex].amount+=1;
+        }
         service.totalPrice += product.Price;
-        service.productInCart.push(product);
+        alert("Thank you , your product add to your cart!");
     };
     service.removeFromCart = function (product) {
         service.totalPrice -= product.Price;
@@ -87,33 +104,54 @@ myApp.factory('cartService', function () {
     return service;
 });
 
+/*myApp.controller('detailsController', ['$uibModalInstance','productDetailsService','$http', function($uibModalInstance,productDetailsService,$http) {
+        var self = this;
+        self.detailService  = productDetailsService;
+        self.productForModal  =  self.detailService.product;
+        self.a = 5;
+        console.log(self.a);
+
+        var reqUrl = "http://localhost:3100/musicalsInstruments/getProductDetails";
+
+    }]);
+*/
+myApp.controller('productDetailsModalController' , ['$scope', '$uibModalInstance','cartService' , 'prod',
+    function ($scope, $uibModalInstance,cartService, prod) {
+        $scope.msg = prod;
+        var self = this;
+        $scope.product = prod;
+        $scope.confirm = function() {
+            $uibModalInstance.close()
+        };
+
+        $scope.addToCart =  function(){
+            cartService.insertToCart($scope.product);
+            $scope.confirm();
+        }
+    }]);
+
 myApp.factory('productDetailsService', function ($uibModal) {
     var service = {};
     service.product = {};
-    service.totalPrice = 0;
     service.productDetails = function (product) {
-        service.product = product;
-        $uibModal.open({
-            templateUrl: 'ProductDetails/productDetails.html',
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'tamplates/productDetails.html',
+            controller: 'productDetailsModalController',
+            size: 'lg',
             resolve: {
-                product: function () {
-                    return product;
+                prod: function() {
+                    return product
                 }
             }
         });
     };
-    service.getProductInCart = function () {
-        return service.productInCart;
-    };
-    service.getTotalPrice = function () {
-        return service.totalPrice;
-    };
     return service;
 });
 
-
-myApp.factory('userService', ['$http', function ($http) {
+myApp.factory('userService', ['$http','localStorageService', function ($http) {
     var service = {};
+
     var userInStorage =  decodeURIComponent(document.cookie);
     if(userInStorage!="")
     {
@@ -135,6 +173,9 @@ myApp.factory('userService', ['$http', function ($http) {
         return $http.post('http://localhost:3100/Login', user)
             .then(function (res) {
                 var token = res.data;
+                if(token === "wrong email or Password!")
+                    return Promise.reject(res);
+                console.log(token);
                 $http.defaults.headers.common = {
                     'my-Token': token,
                     'user': user.mail,
@@ -168,3 +209,4 @@ myApp.factory('userService', ['$http', function ($http) {
     }
     return service;
 }]);
+

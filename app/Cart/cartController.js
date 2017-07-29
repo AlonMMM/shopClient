@@ -11,14 +11,16 @@ angular.module('cartApp', ['ngRoute','ui.bootstrap'])
         });
     }])
 
-    .controller('cartController', ['productService','cartService','$http','$location','$uibModal', function(productService,cartService,$http,$location,$uibModal) {
+    .controller('cartController', ['productService','cartService','productDetailsService','$http','$location','$uibModal', function(productService,cartService,productDetailsService,$http,$location,$uibModal) {
 
         var self = this;
         self.cartService = cartService;
         self.totalPrice = cartService.getTotalPrice();
-
+        self.productDetailsService = productDetailsService;
         self.goToProductPage= function()
         {
             $location.path('products');
         }
+
     }]);
+
