@@ -39,7 +39,7 @@
                                             </div>
                                         <div class="col-md-6">
                                             <a href="#forgotpassword" data-toggle="tab">Forgot Password? </a>
-                                            <a href="#!/registration" data-toggle="tab"> Registration</a>
+                                            <a href="#!/registration" ng-click="close()" data-toggle="tab"> Registration</a>
                                         </div>
 
                                         </div>
@@ -48,14 +48,52 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="forgotpassword">
-                                <form method="post" action='' name="forgot_password">
-                                    <p>Hey this stuff happens, send us your email and we'll reset it for you!</p>
-                                    <input type="text" class="span12" name="eid" id="email" placeholder="Email">
-                                    <p>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <a href="#login" data-toggle="tab">Wait, I remember it now!</a>
-                                    </p>
                                 </form>
+                                <div class="col-md-12">
+                                    <div class="box">
+                                        <h1>Forgot your password?</h1>
+                                        <p>Please answer the questions so we will help you restore your password!</p>
+                                        <hr>
+                                        <form method="post" ng-model="forgetForm" name="forgetForm">
+                                            <div class="form-group">
+                                                <label>Enter your mail</label>
+                                                <input type="text" class="form-control" name="mail"
+                                                       ng-model="forgetUser.mail" required>
+                                                <span style="color:red"
+                                                      ng-show="forgetForm.mail.$dirty && loginForm.mail.$invalid">
+                                <span ng-show="forgetForm.mail.$error.required">Email is required.</span>
+                                  </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>What is the name of your first school?</label>
+                                                <input type="text" class="form-control" name="school"
+                                                       ng-model="forgetUser.school" required>
+                                                <span style="color:red" ng-show="forgetForm.school.$touched">
+                                <span ng-show="forgetForm.school.$error.required">School is required.</span>
+                                  </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>What is the name of your first pet?</label>
+                                                <input type="text" class="form-control" name="pet"
+                                                       ng-model="forgetUser.firstPet" required>
+                                                <span style="color:red" ng-show="forgetForm.pet.$touched">
+                                <span ng-show="forgetForm.pet.$error.required">Pet name is required.</span>
+                                  </span>
+                                            </div>
+                                            <div class="text-center">
+                                                <p ng-show="hasPasswordRestore" style="color: red;">{{getRestoredPassword()}}</p>
+                                                <a ng-show="hasPasswordRestore" href="#login" data-toggle="tab">Back to Login </a>
+                                                <br>
+                                                <button type="submit" class="btn btn-primary" ng-disabled="forgetForm.$invalid"
+                                                        ng-click="restorePassword(forgetForm.$valid)">Restore my
+                                                    password
+                                                </button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
