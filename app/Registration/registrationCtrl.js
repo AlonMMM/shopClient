@@ -58,44 +58,7 @@ angular.module('registrationApp', ['ngRoute'])
                 )
         };
 
-        c.user= {
-            mail:'',
-            pass:''};
-        c.logIn =function(valid)
-        {
-          if(valid){
-              userService.login(c.user)
-                  .then(function (succes){
-                      $window.alert('You are logged in!');
-                      $location.path('/home');
-                      c.response= succes.data;
-                       //cookieSet(localStorageService , c.user.mail, c.user.pass);
-                  },function(error){
-                      c.response= error.message;
-                      $window.alert('Login failed!');
-                      }
-                  )
-          }
-        }
-        c.forgetUser= {
-            mail:'',
-            school:'',
-            firstPet: ''};
-        c.restorePassword =function(valid) {
-            if (valid) {
-                $http.post('http://localhost:3100/users/verifyUserAndRestorePass',  c.forgetUser)
-                    .then(function (response) {
-                            var res = response.data;
-                            c.response=res[0].Password;
-                            console.log(res[0].Password);
-                            console.log(c.response);
-                        }, function (reason) {
-                            c.response = "error is " + reason.message;
-                            console.log(reason);
-                        }
-                    )
-            }
-        }
+
     }]);
 
 function cookieSet(musicMail,localStorageService , mail, password){

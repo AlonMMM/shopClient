@@ -9,7 +9,7 @@
 
                 </div>
                 <div class="col-xs-3">
-                    <a ng-show="!mainCtl.userService.isLoggedIn" href="#!/registration" type="button" class="btn btn-default btn-sm" >
+                    <a ng-show="!mainCtl.userService.isLoggedIn" type="button" class="btn btn-default btn-sm" ng-click="mainCtl.logIn()" >
                         <span ></span> login
                     </a>
                     <a  ng-show="mainCtl.userService.isLoggedIn" href="#!/cart" type="button" class="btn btn-default btn-sm" >

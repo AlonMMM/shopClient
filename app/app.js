@@ -19,14 +19,19 @@ myApp.config(['$locationProvider', '$routeProvider', function ($locationProvider
     $routeProvider.otherwise({redirectTo: '/home'});
 }]);
 
-myApp.controller('mainController', ['userService','cartService','productDetailsService','$http','$location','$uibModal','localStorageService','$window','$scope', function(userService,cartService,productDetailsService,$http,$location,$uibModal, localStorageService,$window,$scope){
+myApp.controller('mainController', ['userService','cartService','productDetailsService','$http','$location','$uibModal','localStorageService','$window','$scope','loginService',
+    function(userService,cartService,productDetailsService,$http,$location,$uibModal, localStorageService,$window,$scope,loginService){
     var self = this;
     self.test = "test";
     self.userEmail = userService.userEmail;
     self.userService = userService;
     self.cartService = cartService;
     self.productDetailsService = productDetailsService;
+    self.loginService = loginService;
 
+    self.logIn = function () {
+        self.loginService.loginModal();
+    }
 
     self.logOut=function() {
         userService.logOut(localStorageService);
@@ -88,8 +93,6 @@ myApp.factory('cartService',['localStorageService', function (localStorageServic
             service.productInCart[productIndex].amount+=1;
         }
         service.totalPrice += product.Price;
-        service.totalPrice += product.Price;
-        service.productInCart.push(product);
         localStorageService.set("cart", service.productInCart);
         localStorageService.set("totalPrice", service.totalPrice);
         alert("Thank you , your product add to your cart!");
@@ -243,3 +246,16 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
     }
     return service;
 }]);
+
+myApp.factory('loginService' , function ($uibModal) {
+    var service = {};
+    service.product = {};
+    service.loginModal = function () {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'tamplates/loginModal.html',
+            controller: 'loginController'
+        });
+    };
+    return service;
+});
