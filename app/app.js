@@ -112,14 +112,11 @@ myApp.factory('cartService',['localStorageService', function (localStorageServic
     service.getProductInCart = function () {
         return service.productInCart;
     };
-
     service.getTotalPrice = function () {
         return service.totalPrice;
     };
-
     service.setFullCart= function(){
         service.userName= localStorageService.cookie.get("mail");
-        console.log("cart loaded " +service.userName);
         service.productInCart = localStorageService.get("cart "+  service.userName);
         service.totalPrice = localStorageService.get("totalPrice "+  service.userName);
     }
@@ -178,18 +175,17 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
     {
         service.userEmail=userInStorage;
         service.isLoggedIn = true;
-        service.lastEntry=  localStorageService.cookie.get("lastEntry");
+        service.lastLogin = "Last Entry: "+localStorageService.get("lastEntry "+service.userEmail);
         var date = new Date();
         var dateString = date.toString();
         dateString = dateString.substring(0, dateString.indexOf("G"));
-        service.lastLogin = "Last Entry: "+service.lastEntry;
-        localStorageService.cookie.set("lastEntry", dateString);
+        localStorageService.set("lastEntry "+service.userEmail, dateString);
         $http.defaults.headers.common = {
             'my-Token': localStorageService.cookie.get("token"),
             'user': service.userEmail,
-            'lastLogin' : service.lastEntry
+            'lastLogin' : localStorageService.get("lastEntry "+service.userEmail)
         };
-        cartService.setFullCart;
+        cartService.setFullCart();
     }
     else
     {
@@ -210,9 +206,22 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
                     'lastLogin' : user.lastLogin
                 };
                 service.cookieSet(user.mail,user.pass,token );
-                service.lastLogin = "Last Entry: "+ localStorageService.cookie.get("lastEntry");
                 service.isLoggedIn = true;
                 service.userEmail = localStorageService.cookie.get("mail");
+                var date = new Date();
+                var dateString = date.toString();
+                dateString = dateString.substring(0, dateString.indexOf("G"));
+                // if its the first login
+                if (localStorageService.get("lastEntry "+service.userEmail)===null){
+                    service.lastLogin = "Its the first time you are here mate!";
+                }
+                else{
+                    service.lastLogin = "Last Entry: "+ localStorageService.get("lastEntry "+service.userEmail);
+                }
+                //save this date to show next time
+                localStorageService.set("lastEntry "+service.userEmail, dateString);
+                //if there is cart, read it from local storage
+                cartService.setFullCart();
                 return Promise.resolve(res);
             })
             .catch(function (e) {
@@ -224,12 +233,7 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
     {
         if (localStorageService.cookie.get("mail") === null) {
             localStorageService.cookie.set("mail", mail);
-            // localStorageService.cookie.set("password", password);
             localStorageService.cookie.set("token", token);
-            var date = new Date();
-            var dateString = date.toString();
-            dateString = dateString.substring(0, dateString.indexOf("G"));
-            localStorageService.cookie.set("lastEntry", dateString);
             console.log("cookie created!!!");
         }
         else {
@@ -238,7 +242,7 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
     };
     service.logOut=function(localStorageService){
         localStorageService.cookie.clearAll();
-        localStorageService.clearAll();
+        // localStorageService.clearAll();
         service.userEmail= "Guest";
         service.isLoggedIn = false;
         service.lastLogin = "";
@@ -254,7 +258,6 @@ myApp.factory('loginService' , function ($uibModal) {
     var service = {};
     service.product = {};
     service.loginModal = function () {
-
         var modalInstance = $uibModal.open({
             templateUrl: 'tamplates/loginModal.html',
             controller: 'loginController'

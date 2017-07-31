@@ -162,8 +162,8 @@
                             </div>
                             <div class="form-group">
                                 <label>Country</label>
-                                <input type="text" class="form-control" name="country" ng-model="registerCtrl.country"
-                                       required>
+                                <select  type="text"  class="form-control" ng-model="registerCtrl.country" ng-options="x.name for x in registerCtrl.countries" required>
+                                </select>
                                 <span style="color:red" ng-show="registrationForm.country.$touched">
                                 <span ng-show="registrationForm.country.$error.required">Please choose a country from the list.</span>
                                   </span>

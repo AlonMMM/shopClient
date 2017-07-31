@@ -13,7 +13,7 @@ angular.module('registrationApp', ['ngRoute'])
         var c= this;
         c.logedIn="";
         c.countries= [];
-        var countries = [{name: 'Mexico'},{name:'Israel'}];
+        var countries = [{name: 'Mexico'},{name:'Israel'},{name:'Japan'} ,{name:'USA'} ,{name:'Egypt'}];
         c.countries= countries;
         c.mail="";
         c.password = "";
