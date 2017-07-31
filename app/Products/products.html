@@ -20,10 +20,10 @@
         <p>Categories :</p>
         <div ng-repeat="category in prodCtrl.allCatrgories"
              class="col-sm-12 ">
-            <li><a  ng-click="prodCtrl.selctedCategory(category)">{{category}}</a></li>
+            <li  ><a data-toggle="tab" ng-click="prodCtrl.selctedCategory(category)">{{category}}</a></li>
         </div>
         <div>Sort By:
-            <li><a  ng-click="prodCtrl.sortChooseen(); filterByCategory = 'Price'">Price</a></li>
+            <li><a  ng-click="prodCtrl.sortChooseen(); filterByCategory = 'Price'" data-toggle="tab">Price</a></li>
             <li><a  ng-click="prodCtrl.sortChooseen(); filterByCategory = 'Description'">Name</a></li>
             <li><a  ng-click="prodCtrl.sortChooseen(); filterByCategory = 'Musical_instrument'">Id</a></li>
             <li><a  ng-click="prodCtrl.sortChooseen(); filterByCategory = 'Manufactur'">Manufactur</a></li>
@@ -33,17 +33,17 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-8">
-                <div ng-show="!prodCtrl.isCategoryChoose && !prodCtrl.sortChoose" ng-repeat="product in prodCtrl.products | filter:search"
+                <div ng-show="!prodCtrl.isCategoryChoose && !prodCtrl.sortChoose" ng-repeat="product in prodCtrl.products | filter:search track by $index"
                      class="col-sm-6 col-md-5">
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
 
-                <div ng-show="prodCtrl.sortChoose" ng-repeat="product in prodCtrl.productsByCategory | orderBy:filterByCategory | filter:search"
+                <div ng-show="prodCtrl.sortChoose" ng-repeat="product in prodCtrl.productsByCategory | orderBy:filterByCategory | filter:search track by $index"
                      class="col-sm-6 col-md-5">
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
 
-                <div ng-show="prodCtrl.isCategoryChoose && !prodCtrl.sortChoose" ng-repeat="product in prodCtrl.productsByCategory | filter:search"
+                <div ng-show="prodCtrl.isCategoryChoose && !prodCtrl.sortChoose" ng-repeat="product in prodCtrl.productsByCategory | filter:search track by $index"
                      class="col-sm-6 col-md-5">
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
@@ -54,6 +54,11 @@
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
             </div>
+            <div ng-show="!prodCtrl.userService.isLoggedIn" class="col-xs-3" style="border:2px solid black;" >
+                <h1>Please <a ng-click="prodCtrl.loginService.loginModal()">login</a> to watch recomended product for you</h1>
+            </div>
+
+
         </div>
     </div>
 </div>

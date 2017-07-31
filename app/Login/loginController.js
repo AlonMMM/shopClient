@@ -9,44 +9,47 @@ angular.module('myLoginApp', ['ngRoute'])
     }])
 
 
-    .controller('loginController', ['$http', 'loginService','userService','$scope','$uibModalInstance', function ($http, loginService,userService,$scope,$uibModalInstance) {
+    .controller('loginController', ['$http', 'loginService', 'userService', '$scope', '$uibModalInstance', function ($http, loginService, userService, $scope, $uibModalInstance) {
         var self = this;
         self.loginService = loginService;
-        self.loginService  = userService;
+        self.loginService = userService;
         //self.logIn = userService.logIn();
-
-        $scope.user= {
-            mail:'',
-            pass:''};
-        $scope.logIn =function(valid)
-        {
-            if(valid){
+        $scope.hasPasswordRestore = false;
+        $scope.user = {
+            mail: '',
+            pass: ''
+        };
+        $scope.logIn = function (valid) {
+            if (valid) {
                 userService.login($scope.user)
-                    .then(function (succes){
+                    .then(function (succes) {
                             alert('You are logged in!');
                             $scope.close();
-                            self.response= succes.data;
-                        },function(error){
-                            self.response= error.message;
+                            $scope.response = succes.data;
+                        }, function (error) {
+                            self.response = error.message;
                             alert('Login failed!');
                         }
                     )
             }
         }
-        self.forgetUser= {
-            mail:'',
-            school:'',
-            firstPet: ''};
-        self.restorePassword =function(valid) {
+        $scope.forgetUser = {
+            mail: '',
+            school: '',
+            firstPet: ''
+        };
+        $scope.restorePassword = function (valid) {
             if (valid) {
-                $http.post('http://localhost:3100/users/verifyUserAndRestorePass',  self.forgetUser)
+                $http.post('http://localhost:3100/users/verifyUserAndRestorePass', $scope.forgetUser)
                     .then(function (response) {
                             var res = response.data;
-                            self.response=res[0].Password;
+                            $scope.restoredPass = res[0].Password;
                             console.log(res[0].Password);
-                            console.log(self.response);
+                            console.log($scope.restoredPass);
+                            $scope.hasPasswordRestore = true;
+
                         }, function (reason) {
-                            self.response = "error is " + reason.message;
+                            $scope.restoredPass = "error is " + reason.message;
                             console.log(reason);
                         }
                     )
@@ -56,5 +59,13 @@ angular.module('myLoginApp', ['ngRoute'])
         $scope.close = function () {
             $uibModalInstance.close();
 
+        }
+
+        $scope.getRestoredPassword = function () {
+            if ($scope.restoredPass)
+                return "Your password is: "+$scope.restoredPass;
+            else {
+                return "Wrong answers or email, please try again";
+            }
         }
     }])

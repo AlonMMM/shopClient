@@ -8,7 +8,7 @@ angular.module('homeApp', ['ngRoute','ui.bootstrap'])
   });
 }])
 
-.controller('homeCtrl', ['userService','productService','productDetailsService','$http','$location','$uibModal', function(userService,productService,productDetailsService,$http,$location,$uibModal) {
+.controller('homeCtrl', ['userService','productService','productDetailsService','$http','$location','$uibModal', 'loginService', function(userService,productService,productDetailsService,$http,$location,$uibModa,loginService) {
 
     var reqUrl = "http://localhost:3100/musicalsInstruments/getTop5Products";
 
@@ -16,9 +16,11 @@ angular.module('homeApp', ['ngRoute','ui.bootstrap'])
     self.top5Products = [];
     self.lastestProduct = [];
     self.userService = userService;
+    self.loginService= loginService;
+
 
     self.getTop5Product =function() {
-        //synchonize problem - need to return promise
+        //synchonize problem - need to return promise from server
         return new Promise(function (resolve, reject) {
         $http.get(reqUrl)
             .then(function (response) {

@@ -101,8 +101,8 @@ myApp.factory('cartService',['localStorageService', function (localStorageServic
         alert("Thank you , your product add to your cart!");
     };
     service.removeFromCart = function (product) {
-        service.totalPrice -= product.Price;
         var index = service.productInCart.indexOf(product);
+        service.totalPrice -= (product.Price * service.productInCart[index].amount);
         service.productInCart.splice(index, 1);
         service.userName= localStorageService.cookie.get("mail");
         console.log("product removed from cart of " +service.userName);
@@ -174,7 +174,7 @@ myApp.factory('productDetailsService', function ($uibModal) {
 myApp.factory('userService', ['$http','localStorageService','cartService', function ($http, localStorageService,cartService) {
     var service = {};
     var userInStorage =  localStorageService.cookie.get("mail");
-    if(userInStorage!=null)
+    if(userInStorage!==null)
     {
         service.userEmail=userInStorage;
         service.isLoggedIn = true;
@@ -185,7 +185,7 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
         service.lastLogin = "Last Entry: "+service.lastEntry;
         localStorageService.cookie.set("lastEntry", dateString);
         $http.defaults.headers.common = {
-            'my-Token':localStorageService.cookie.get("token"),
+            'my-Token': localStorageService.cookie.get("token"),
             'user': service.userEmail,
             'lastLogin' : service.lastEntry
         };
@@ -222,7 +222,7 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
 
     service.cookieSet=function(mail, password, token)
     {
-        if (localStorageService.cookie.get("mail") == null) {
+        if (localStorageService.cookie.get("mail") === null) {
             localStorageService.cookie.set("mail", mail);
             // localStorageService.cookie.set("password", password);
             localStorageService.cookie.set("token", token);
@@ -246,7 +246,7 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
 
     service.getLoggedIn = function(){
         return service.isLoggedIn;
-    }
+    };
     return service;
 }]);
 

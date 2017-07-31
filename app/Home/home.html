@@ -1,7 +1,6 @@
 
 <div ng-controller="homeCtrl as homeC">
-    <h1 class="home">Welcome</h1>
-
+    <h1 class="home">Welcome To Musical ShipShop</h1>
     <div class="container">
         <div class="row">
 
@@ -16,6 +15,9 @@
                 <div  ng-repeat="product in homeC.lastestProduct" >
                     <div ng-include="'tamplates/productBox'"></div>
                 </div>
+            </div>
+            <div ng-show="!homeC.userService.isLoggedIn" class="col-xs-4" style="border:2px solid black;" >
+                <h1>Please <a ng-click="homeC.loginService.loginModal()">login</a> to watch our newest product</h1>
             </div>
         </div>
     </div>
