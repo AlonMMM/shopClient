@@ -77,6 +77,7 @@ myApp.factory('cartService',['localStorageService', function (localStorageServic
     service.userName="";
     service.insertToCart = function (product) {
         var productIndex = -1;
+        // if (service.productInCart!==null)
         for(var i = 0; i<service.productInCart.length ; i++)
         {
             if(service.productInCart[i].Musical_instrument === product.Musical_instrument){
@@ -117,7 +118,8 @@ myApp.factory('cartService',['localStorageService', function (localStorageServic
     };
     service.setFullCart= function(){
         service.userName= localStorageService.cookie.get("mail");
-        service.productInCart = localStorageService.get("cart "+  service.userName);
+        if (localStorageService.get("cart "+  service.userName)!==null)
+            service.productInCart = localStorageService.get("cart "+  service.userName);
         service.totalPrice = localStorageService.get("totalPrice "+  service.userName);
     }
     return service;
@@ -234,10 +236,10 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
         if (localStorageService.cookie.get("mail") === null) {
             localStorageService.cookie.set("mail", mail);
             localStorageService.cookie.set("token", token);
-            console.log("cookie created!!!");
+            console.log("cookie created!");
         }
         else {
-            console.log("cookie already exist");
+            console.log("cookie already exist!");
         }
     };
     service.logOut=function(localStorageService){
