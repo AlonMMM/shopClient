@@ -162,11 +162,17 @@
                             </div>
                             <div class="form-group">
                                 <label>Country</label>
+
+                                <select ng-model="signupCtrl.user.country"
+                                        ng-options="country.Name as country.Name for country in registerCtrl.countries">
+                                </select>
+                                <!--
                                 <input type="text" class="form-control" name="country" ng-model="registerCtrl.country"
                                        required>
                                 <span style="color:red" ng-show="registrationForm.country.$touched">
                                 <span ng-show="registrationForm.country.$error.required">Please choose a country from the list.</span>
                                   </span>
+                                  -->
                             </div>
                             <div class="form-group">
                                 <label>Creditcard number - numbers only</label>

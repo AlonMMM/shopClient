@@ -57,8 +57,6 @@ angular.module('registrationApp', ['ngRoute'])
                     }
                 )
         };
-
-
     }]);
 
 function cookieSet(musicMail,localStorageService , mail, password){

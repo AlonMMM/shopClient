@@ -75,6 +75,10 @@ myApp.factory('cartService',['userService','localStorageService', function (user
     service.productInCart = [];
     service.totalPrice = 0;
     service.insertToCart = function (product) {
+        if (!userService.isLoggedIn){
+            alert("Sorry, you can't add to your cart when you are not logged in")
+            return;
+        }
         var productIndex = -1;
         for(var i = 0; i<service.productInCart.length ; i++)
         {
