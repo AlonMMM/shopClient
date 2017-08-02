@@ -10,7 +10,8 @@ var myApp=angular.module('myApp', [
   'myApp.version',
     'ui.bootstrap',
     'LocalStorageModule',
-    'cartApp'
+    'cartApp',
+    // 'DataSourceProvider'
 
 ]);
 
