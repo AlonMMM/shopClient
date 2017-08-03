@@ -10,7 +10,8 @@ var myApp=angular.module('myApp', [
   'myApp.version',
     'ui.bootstrap',
     'LocalStorageModule',
-    'cartApp'
+    'cartApp',
+    // 'DataSourceProvider'
 
 ]);
 
@@ -70,16 +71,18 @@ myApp.factory('productService', function () {
     return service;
 });
 
-myApp.factory('cartService',['userService','localStorageService', function (userService,localStorageService) {
+myApp.factory('cartService',['localStorageService', function (localStorageService) {
     var service = {};
     service.productInCart = [];
     service.totalPrice = 0;
+    service.userName="";
     service.insertToCart = function (product) {
         if (!userService.isLoggedIn){
             alert("Sorry, you can't add to your cart when you are not logged in")
             return;
         }
         var productIndex = -1;
+        // if (service.productInCart!==null)
         for(var i = 0; i<service.productInCart.length ; i++)
         {
             if(service.productInCart[i].Musical_instrument === product.Musical_instrument){
@@ -97,33 +100,33 @@ myApp.factory('cartService',['userService','localStorageService', function (user
             service.productInCart[productIndex].amount+=1;
         }
         service.totalPrice += product.Price;
-        console.log("cart add user name: " + userService.userEmail);
-        // storageService.setCartInStorage;
-        localStorageService.set("cart "+ userService.userEmail, service.productInCart);
-        localStorageService.set("totalPrice "+  userService.userEmail, service.totalPrice);
+        service.userName= localStorageService.cookie.get("mail");
+        console.log("product added to cart of " +service.userName);
+        localStorageService.set("cart "+ service.userName, service.productInCart);
+        localStorageService.set("totalPrice "+  service.userName, service.totalPrice);
         alert("Thank you , your product add to your cart!");
     };
     service.removeFromCart = function (product) {
         var index = service.productInCart.indexOf(product);
         service.totalPrice -= (product.Price * service.productInCart[index].amount);
         service.productInCart.splice(index, 1);
-        console.log("cart remove user name: " + userService.userEmail);
-        localStorageService.set("cart "+  userService.userEmail, service.productInCart);
-        localStorageService.set("totalPrice "+  userService.userEmail, service.totalPrice);
+        service.userName= localStorageService.cookie.get("mail");
+        console.log("product removed from cart of " +service.userName);
+        localStorageService.set("cart "+ service.userName, service.productInCart);
+        localStorageService.set("totalPrice "+ service.userName, service.totalPrice);
     };
     service.getProductInCart = function () {
         return service.productInCart;
     };
-
     service.getTotalPrice = function () {
         return service.totalPrice;
     };
-
-    // service.setFullCart= function(){
-    //     console.log("3 get from storage"+ userService.userEmail);
-    //     service.productInCart = localStorageService.get("cart "+  userService.userEmail);
-    //     service.totalPrice = localStorageService.get("totalPrice "+  userService.userEmail);
-    // }
+    service.setFullCart= function(){
+        service.userName= localStorageService.cookie.get("mail");
+        if (localStorageService.get("cart "+  service.userName)!==null)
+            service.productInCart = localStorageService.get("cart "+  service.userName);
+        service.totalPrice = localStorageService.get("totalPrice "+  service.userName);
+    }
     return service;
 }]);
 
@@ -172,29 +175,24 @@ myApp.factory('productDetailsService', function ($uibModal) {
     return service;
 });
 
-myApp.factory('userService', ['$http','localStorageService','cartStorageService', function ($http, localStorageService,cartStorageService) {
+myApp.factory('userService', ['$http','localStorageService','cartService', function ($http, localStorageService,cartService) {
     var service = {};
     var userInStorage =  localStorageService.cookie.get("mail");
     if(userInStorage!==null)
     {
         service.userEmail=userInStorage;
         service.isLoggedIn = true;
-        service.lastEntry=  localStorageService.cookie.get("lastEntry");
+        service.lastLogin = "Last Entry: "+localStorageService.get("lastEntry "+service.userEmail);
         var date = new Date();
         var dateString = date.toString();
         dateString = dateString.substring(0, dateString.indexOf("G"));
-        service.lastLogin = "Last Entry: "+service.lastEntry;
-        localStorageService.cookie.set("lastEntry", dateString);
+        localStorageService.set("lastEntry "+service.userEmail, dateString);
         $http.defaults.headers.common = {
             'my-Token': localStorageService.cookie.get("token"),
             'user': service.userEmail,
-            'lastLogin' : service.lastEntry
+            'lastLogin' : localStorageService.get("lastEntry "+service.userEmail)
         };
-        // var cartLocalService = $injector.get('cartService');
-        // cartLocalService.setFullCart;
-        console.log("1 get from storage");
-        // cartStorageService.getCartFromStorage(service.userEmail);
-        console.log("1.1 get from storage");
+        cartService.setFullCart();
     }
     else
     {
@@ -215,9 +213,22 @@ myApp.factory('userService', ['$http','localStorageService','cartStorageService'
                     'lastLogin' : user.lastLogin
                 };
                 service.cookieSet(user.mail,user.pass,token );
-                service.lastLogin = "Last Entry: "+ localStorageService.cookie.get("lastEntry");
                 service.isLoggedIn = true;
                 service.userEmail = localStorageService.cookie.get("mail");
+                var date = new Date();
+                var dateString = date.toString();
+                dateString = dateString.substring(0, dateString.indexOf("G"));
+                // if its the first login
+                if (localStorageService.get("lastEntry "+service.userEmail)===null){
+                    service.lastLogin = "Its the first time you are here mate!";
+                }
+                else{
+                    service.lastLogin = "Last Entry: "+ localStorageService.get("lastEntry "+service.userEmail);
+                }
+                //save this date to show next time
+                localStorageService.set("lastEntry "+service.userEmail, dateString);
+                //if there is cart, read it from local storage
+                cartService.setFullCart();
                 return Promise.resolve(res);
             })
             .catch(function (e) {
@@ -229,21 +240,16 @@ myApp.factory('userService', ['$http','localStorageService','cartStorageService'
     {
         if (localStorageService.cookie.get("mail") === null) {
             localStorageService.cookie.set("mail", mail);
-            // localStorageService.cookie.set("password", password);
             localStorageService.cookie.set("token", token);
-            var date = new Date();
-            var dateString = date.toString();
-            dateString = dateString.substring(0, dateString.indexOf("G"));
-            localStorageService.cookie.set("lastEntry", dateString);
-            console.log("cookie created!!!");
+            console.log("cookie created!");
         }
         else {
-            console.log("cookie already exist");
+            console.log("cookie already exist!");
         }
     };
     service.logOut=function(localStorageService){
         localStorageService.cookie.clearAll();
-        localStorageService.clearAll();
+        // localStorageService.clearAll();
         service.userEmail= "Guest";
         service.isLoggedIn = false;
         service.lastLogin = "";
@@ -259,7 +265,6 @@ myApp.factory('loginService' , function ($uibModal) {
     var service = {};
     service.product = {};
     service.loginModal = function () {
-
         var modalInstance = $uibModal.open({
             templateUrl: 'tamplates/loginModal.html',
             controller: 'loginController'
@@ -268,17 +273,4 @@ myApp.factory('loginService' , function ($uibModal) {
     return service;
 });
 
-myApp.factory('cartStorageService' ,['$injector','localStorageService' ,function ($injector,localStorageService) {
-    var service = {};
 
-    service.getCartFromStorage = function(userName){
-        console.log("2 get from storage");
-        var cartLocalService = $injector.get('cartService');
-            console.log("3 get from storage"+ userService.userEmail);
-        cartLocalService.productInCart = localStorageService.get("cart "+ userName);
-        cartLocalService.totalPrice = localStorageService.get("totalPrice "+  userName);
-        console.log("4 get from storage"+ userService.userEmail);
-    };
-
-    return service;
-}]);
