@@ -81,7 +81,7 @@ angular.module('registrationApp', ['ngRoute'])
         //     .success(function (response) {
         //         console.log(response);
         //     });
-        var SOURCE_FILE = "countries.xml";
+        var SOURCE_FILE = "file/countries.xml";
         var xmlTransform = function (data) {
             console.log("transform data");
             var x2js = new X2JS();
@@ -89,7 +89,7 @@ angular.module('registrationApp', ['ngRoute'])
             return json.Countries;
         };
         var setData = function (data) {
-            console.log("setdata", data);
+            console.log("setData", data);
             self.countries = data;
             self.dataSet = data;
         };

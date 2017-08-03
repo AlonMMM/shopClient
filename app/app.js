@@ -273,4 +273,18 @@ myApp.factory('loginService' , function ($uibModal) {
     return service;
 });
 
+myApp.factory('DataSource', ['$http', function ($http) {
+    return {
+        get: function (file, callback, transform) {
+            $http.get(file, {transformResponse: transform})
+                .then(function (data, status) {
+                    console.log("Request succeeded", data);
+                    callback(data.data.Country);
+                }, function errorCallBack(data, status) {
+                    console.log("Request failed " + status);
+                });
+        }
+    };
+}]);
+
 
