@@ -12,6 +12,9 @@
                     <a ng-show="!mainCtl.userService.isLoggedIn" type="button" class="btn btn-default btn-sm" ng-click="mainCtl.logIn()" >
                         <span ></span> login
                     </a>
+                    <a ng-show="!mainCtl.userService.isLoggedIn" type="button" class="btn btn-default btn-sm" href="#!/registration" >
+                        <span ></span> Sign-up
+                    </a>
                     <a  ng-show="mainCtl.userService.isLoggedIn" href="#!/cart" type="button" class="btn btn-default btn-sm" >
                         <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
                     </a>
@@ -27,16 +30,16 @@
     <!-- *** NAVBAR ***
  _________________________________________________________ -->
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-inverse bg-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Music Shop</a>
+                <a class="navbar-brand" href="#" >Music Shop</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#!/home">Home</a></li>
+                <li><a href="#!/home">Home</a></li>
                 <li><a href="#!/products">Products</a></li>
-                <li><a href="#" ng-click="mainCtl.openAboutModal()">About</a></li>
-                <li><a href="#" ng-click="mainCtl.openContactModal()">Contact</a></li>
+                <li><a ng-click="mainCtl.openAboutModal()">About</a></li>
+                <li><a ng-click="mainCtl.openContactModal()">Contact</a></li>
 
             </ul>
         </div>

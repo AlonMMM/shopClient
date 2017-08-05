@@ -8,12 +8,12 @@ angular.module('registrationApp', ['ngRoute'])
         });
     }])
 
-    .controller('registerController', ['userService', '$http','$location', '$window','DataSource', function(userService, $http,$location, $window, DataSource) {
+    .controller('registerController', ['userService', '$http','$location', '$window','DataSource','loginService', function(userService, $http,$location, $window, DataSource,loginService) {
         var registerUrl = "http://localhost:3100/users/registerUser";
         var c = this;
         c.logedIn = "";
         c.countries = [];
-        var countries = [{name: 'Mexico'}, {name: 'Israel'}, {name: 'Japan'}, {name: 'USA'}, {name: 'Egypt'}];
+        var countries =[];
         c.countries = countries;
         c.mail = "";
         c.password = "";
@@ -41,7 +41,7 @@ angular.module('registrationApp', ['ngRoute'])
                 "cellular": c.cellular,
                 "addr": c.addr,
                 "city": c.city,
-                "country": c.country,
+                "country": c.country.Name,
                 "creditCardNum": c.creditCardNum,
                 "isAdmin": c.isAdmin,
                 "interest_types": c.interest_types.toString(),
@@ -52,47 +52,30 @@ angular.module('registrationApp', ['ngRoute'])
                 .then(function (response) {
                         var res = response.data;
                         c.response = res;
+                        if(c.response.contains("already used!"))
+                            alert(res);
+                        loginService.loginModal();
                     }, function (reason) {
                         c.response = "error is " + reason.message;
+                        alert(c.response);
                     }
                 )
+
         };
 
-        // $http({
-        //     method: "GET",
-        //     url:  "http://localhost:3100/countries.xml",
-        // }).success(function(data)
-        // {
-        //     alert(data);
-        //     var x2js = new X2JS();
-        //     var json = x2js.xml_str2json(data);
-        //     alert(json);
-        // })
-        //
-        //
-        // $http.get("countries",
-        //     {
-        //         transformResponse: function (cnv) {
-        //             var x2js = new X2JS();
-        //             var aftCnv = x2js.xml_str2json(cnv);
-        //             return aftCnv;
-        //         }
-        //     })
-        //     .success(function (response) {
-        //         console.log(response);
-        //     });
-        var SOURCE_FILE = "file/countries.xml";
+        var SOURCE_FILE = "files/countries.xml";
         var xmlTransform = function (data) {
             console.log("transform data");
             var x2js = new X2JS();
             var json = x2js.xml_str2json(data);
+            console.log(json);
             return json.Countries;
+
         };
         var setData = function (data) {
             console.log("setData", data);
-            self.countries = data;
-            self.dataSet = data;
+            c.countries = data;
+            c.dataSet = data;
         };
         DataSource.get(SOURCE_FILE, setData, xmlTransform);
-
     }]);

@@ -32,13 +32,13 @@ myApp.controller('mainController', ['userService','cartService','productDetailsS
 
     self.logIn = function () {
         self.loginService.loginModal();
-    }
+    };
 
     self.logOut=function() {
         userService.logOut(localStorageService);
         $window.alert('Bye Bye see you next time!!');
         $location.path('/home');
-    }
+    };
 
     self.cartService = cartService;
 
@@ -47,7 +47,7 @@ myApp.controller('mainController', ['userService','cartService','productDetailsS
         $uibModal.open({
             templateUrl: 'tamplates/contactModal.html'
         });
-    }
+    };
 
     self.openAboutModal = function () {
         $uibModal.open({
@@ -77,7 +77,8 @@ myApp.factory('cartService',['localStorageService', function (localStorageServic
     service.totalPrice = 0;
     service.userName="";
     service.insertToCart = function (product) {
-        if (!userService.isLoggedIn){
+        service.userName= localStorageService.cookie.get("mail");
+        if (service.userName===null){
             alert("Sorry, you can't add to your cart when you are not logged in")
             return;
         }
@@ -100,7 +101,7 @@ myApp.factory('cartService',['localStorageService', function (localStorageServic
             service.productInCart[productIndex].amount+=1;
         }
         service.totalPrice += product.Price;
-        service.userName= localStorageService.cookie.get("mail");
+     //   service.userName= localStorageService.cookie.get("mail");
         console.log("product added to cart of " +service.userName);
         localStorageService.set("cart "+ service.userName, service.productInCart);
         localStorageService.set("totalPrice "+  service.userName, service.totalPrice);
@@ -175,7 +176,7 @@ myApp.factory('productDetailsService', function ($uibModal) {
     return service;
 });
 
-myApp.factory('userService', ['$http','localStorageService','cartService', function ($http, localStorageService,cartService) {
+myApp.factory('userService', ['$http','localStorageService','cartService','$location', function ($http, localStorageService,cartService,$location) {
     var service = {};
     var userInStorage =  localStorageService.cookie.get("mail");
     if(userInStorage!==null)
@@ -229,6 +230,7 @@ myApp.factory('userService', ['$http','localStorageService','cartService', funct
                 localStorageService.set("lastEntry "+service.userEmail, dateString);
                 //if there is cart, read it from local storage
                 cartService.setFullCart();
+                $location.path('/home');
                 return Promise.resolve(res);
             })
             .catch(function (e) {
