@@ -52,7 +52,7 @@ angular.module('registrationApp', ['ngRoute'])
                 .then(function (response) {
                         var res = response.data;
                         c.response = res;
-                        if(c.response.contains("already used!"))
+                        if(c.response.includes("already used!"))
                             alert(res);
                         loginService.loginModal();
                     }, function (reason) {
